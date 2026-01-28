@@ -238,11 +238,21 @@ function renderNotes() {
     if (!container) return;
 
     // Filter
+    console.log("Filtreleme Başladı. Kategori:", currentCategory, "Alt Kategori:", currentSubCategory);
+    console.log("Mevcut Notlar:", notes);
+
     let filtered = notes.filter(n => {
-        if (currentCategory !== 'all' && n.category !== currentCategory) return false;
-        if (currentCategory === 'egitim' && currentSubCategory && n.subCategory !== currentSubCategory) return false;
-        return true;
+        // Debug each note
+        const catMatch = (currentCategory === 'all' || n.category === currentCategory);
+        const subMatch = (currentCategory !== 'egitim' || !currentSubCategory || n.subCategory === currentSubCategory);
+
+        if (!catMatch) console.log(`Not elendi (${n.title}): Kategori uymuyor (${n.category} != ${currentCategory})`);
+        if (catMatch && !subMatch) console.log(`Not elendi (${n.title}): Alt kategori uymuyor (${n.subCategory} != ${currentSubCategory})`);
+
+        return catMatch && subMatch;
     });
+
+    console.log("Filtrelenmiş Sonuç:", filtered.length);
 
     // Sort (Newest first)
     filtered.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
