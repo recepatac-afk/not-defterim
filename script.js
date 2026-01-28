@@ -617,7 +617,26 @@ document.addEventListener('DOMContentLoaded', () => {
     migrationBtn.onclick = window.migrateFromFile;
     document.body.appendChild(migrationBtn);
 
-    alert("Not Defterim Başarıyla Yüklendi! (Google Cloud/Firebase Aktif)");
+    // --- DEBUG BUTTON (Temporary) ---
+    const debugBtn = document.createElement('button');
+    debugBtn.innerText = "HATA AYIKLA (DEBUG)";
+    debugBtn.style.cssText = "position:fixed; bottom:50px; right:10px; z-index:9999; background:red; color:white; padding:10px;";
+    debugBtn.onclick = () => {
+        const info = `
+        Ekran Genişliği: ${window.innerWidth}
+        Not Sayısı: ${notes.length}
+        Sidebar Sınıfları: ${document.querySelector('.sidebar').className}
+        Sidebar Genişlik: ${document.querySelector('.sidebar').getBoundingClientRect().width}
+        Sidebar Left: ${getComputedStyle(document.querySelector('.sidebar')).left}
+        Hata Var mı?: ${document.querySelector('.error-banner') ? 'Evet' : 'Hayır'}
+        `;
+        alert(info);
+        // Force Toggle Sidebar
+        document.querySelector('.sidebar').classList.toggle('active');
+    };
+    document.body.appendChild(debugBtn);
+
+    alert("Not Defterim v4 Başarıyla Yüklendi!");
 });
 
 // --- Data Listeners ---
