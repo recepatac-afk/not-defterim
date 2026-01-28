@@ -833,7 +833,6 @@ textarea {
     background: transparent;
     border: 1px dashed transparent;
     padding: 4px;
-    outline: none;
     min-width: 20px;
 }
 
