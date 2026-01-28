@@ -508,8 +508,26 @@ document.addEventListener('DOMContentLoaded', () => {
         console.error("Kaydet butonu bulunamadı! (#btn-save-note)");
     }
 
-    // MOBILE MENU TOGGLE (Assuming there is a button or we need to add one)
-    // Checking/Adding a Hamburger Menu for Mobile
+    // --- REAL-TIME DATA LISTENER (onSnapshot) ---
+    // This was missing! Adding it back to listen for changes.
+    const q = query(collection(db, "notes"));
+    const unsubscribe = onSnapshot(q, (snapshot) => {
+        notes = [];
+        snapshot.forEach((doc) => {
+            notes.push({ id: doc.id, ...doc.data() });
+        });
+        console.log("Sunucudan veri geldi. Belge sayısı:", notes.length);
+
+        // Update Stats
+        if (document.getElementById('total-notes-count')) document.getElementById('total-notes-count').innerText = notes.length;
+
+        // Render
+        renderNotes();
+    }, (error) => {
+        console.error("Veri okuma hatası:", error);
+    });
+
+    // Mobile Menu & Other Initializations (retained)
     const mobileMenuBtn = document.createElement('button');
     mobileMenuBtn.className = 'icon-btn mobile-only';
     mobileMenuBtn.innerHTML = '<i class="fa-solid fa-bars"></i>';
