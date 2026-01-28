@@ -103,11 +103,17 @@ window.closeModal = function () {
 
 window.saveNote = async function () {
     console.log("Kaydediliyor...");
-    const title = document.getElementById('note-title').value;
-    const content = document.getElementById('note-content').value;
-    const category = document.getElementById('note-category').value;
-    const subCategory = document.getElementById('note-subcategory-input').value;
-    const noteId = document.getElementById('note-id').value;
+    const titleInput = document.getElementById('note-title-input'); // Fixed ID
+    const contentInput = document.getElementById('note-content');
+    const categoryInput = document.getElementById('note-category-select'); // Fixed ID
+    const subCategoryInput = document.getElementById('note-subcategory-input');
+    const noteIdInput = document.getElementById('note-id'); // Need to check if this exists in HTML
+
+    const title = titleInput ? titleInput.value : '';
+    const content = contentInput ? contentInput.value : '';
+    const category = categoryInput ? categoryInput.value : 'genel';
+    const subCategory = subCategoryInput ? subCategory.value : '';
+    const noteId = noteIdInput ? noteIdInput.value : null;
 
     if (!title && !content && currentAttachments.length === 0) {
         alert('Lütfen boş not kaydetmeyin.');
@@ -472,11 +478,24 @@ document.addEventListener('DOMContentLoaded', () => {
     const sidebarNewBtn = document.getElementById('btn-new-note');
     if (sidebarNewBtn) {
         sidebarNewBtn.addEventListener('click', () => {
+            // Reset UI before opening
+            if (document.getElementById('note-title-input')) document.getElementById('note-title-input').value = ''; // Fixed ID
+            if (document.getElementById('note-content')) document.getElementById('note-content').value = '';
+            if (document.getElementById('note-content-wrapper')) document.getElementById('note-content-wrapper').style.backgroundColor = 'transparent';
+            // Also hide drawing if open
+            if (window.switchView) window.switchView('text');
+
             console.log("Yeni Not butonuna basıldı");
             window.openModal();
         });
+    }
+
+    // SAVE NOTE BUTTON LISTENER
+    const saveBtn = document.getElementById('btn-save-note');
+    if (saveBtn) {
+        saveBtn.addEventListener('click', window.saveNote);
     } else {
-        console.error("Yeni Not butonu bulunamadı! (#btn-new-note)");
+        console.error("Kaydet butonu bulunamadı! (#btn-save-note)");
     }
 
     // --- DATA MIGRATION TOOL ---

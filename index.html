@@ -249,8 +249,7 @@
                     <button class="icon-btn" id="btn-camera" title="Fotoğraf Çek" style="font-size: 1.1rem;"><i
                             class="fa-solid fa-camera"></i></button>
 
-                    <!-- Hidden Inputs from old logic -->
-                    <input type="file" id="file-upload" hidden multiple>
+                    <!-- Hidden Inputs from old logic - CLEARED -->
                     <input type="color" id="drawing-color" value="#000000"
                         style="visibility:hidden; width:0; height:0;">
                     <input type="range" id="drawing-size" min="1" max="20" value="3"
@@ -332,7 +331,10 @@
                 <input type="file" id="file-upload" hidden multiple>
                 <button class="icon-btn" title="Kamera" id="btn-camera"><i class="fa-solid fa-camera"></i></button>
             </div>
-            <button id="btn-save-note" class="btn-primary">Kaydet</button>
+            <button id="btn-save-note" class="btn-primary-large"
+                style="width:100%; justify-content:center; margin-top:1rem; background: var(--primary-color);">
+                <i class="fa-solid fa-floppy-disk"></i> Kaydet
+            </button>
         </div> <!-- Close modal-actions -->
     </div> <!-- Close note-modal -->
 
