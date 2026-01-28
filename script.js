@@ -112,7 +112,7 @@ window.saveNote = async function () {
     const title = titleInput ? titleInput.value : '';
     const content = contentInput ? contentInput.value : '';
     const category = categoryInput ? categoryInput.value : 'genel';
-    const subCategory = subCategoryInput ? subCategory.value : '';
+    const subCategory = subCategoryInput ? subCategoryInput.value : ''; // Fixed self-reference
     const noteId = noteIdInput ? noteIdInput.value : null;
 
     if (!title && !content && currentAttachments.length === 0) {
