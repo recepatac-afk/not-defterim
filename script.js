@@ -498,6 +498,44 @@ document.addEventListener('DOMContentLoaded', () => {
         console.error("Kaydet butonu bulunamadı! (#btn-save-note)");
     }
 
+    // MOBILE MENU TOGGLE (Assuming there is a button or we need to add one)
+    // Checking/Adding a Hamburger Menu for Mobile
+    const mobileMenuBtn = document.createElement('button');
+    mobileMenuBtn.className = 'icon-btn mobile-only';
+    mobileMenuBtn.innerHTML = '<i class="fa-solid fa-bars"></i>';
+    mobileMenuBtn.style.cssText = 'position:fixed; top:1rem; left:1rem; z-index:900; background:var(--bg-card); padding:0.5rem; border-radius:8px; display:none;'; // Initially hidden, CSS will show it
+
+    // Inject into body or header? Layout is flex. 
+    // Better to handle in logic: If screen is small, clicking outside sidebar closes it
+
+    // Let's add the button to the DOM if it doesn't exist
+    if (!document.getElementById('mobile-menu-toggle')) {
+        mobileMenuBtn.id = 'mobile-menu-toggle';
+        document.body.appendChild(mobileMenuBtn);
+
+        mobileMenuBtn.addEventListener('click', () => {
+            document.querySelector('.sidebar').classList.toggle('active');
+        });
+
+        // Close sidebar when clicking outside
+        document.addEventListener('click', (e) => {
+            const sidebar = document.querySelector('.sidebar');
+            if (sidebar.classList.contains('active') && !sidebar.contains(e.target) && e.target !== mobileMenuBtn && !mobileMenuBtn.contains(e.target)) {
+                sidebar.classList.remove('active');
+            }
+        });
+    }
+
+    // Add CSS for the button dynamically if not in style.css
+    const styleSheet = document.createElement("style");
+    styleSheet.innerText = `
+        @media (max-width: 768px) {
+            #mobile-menu-toggle { display: block !important; }
+            .app-container { padding-left: 0; }
+        }
+    `;
+    document.head.appendChild(styleSheet);
+
     // --- DATA MIGRATION TOOL ---
     // --- DATA MIGRATION TOOL (FILE BASED) ---
     window.migrateFromFile = function () {
