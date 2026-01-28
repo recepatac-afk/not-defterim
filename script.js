@@ -555,14 +555,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Add CSS for the button dynamically if not in style.css
-    const styleSheet = document.createElement("style");
-    styleSheet.innerText = `
-        @media (max-width: 768px) {
-            #mobile-menu-toggle { display: block !important; }
-            .app-container { padding-left: 0; }
-        }
-    `;
-    document.head.appendChild(styleSheet);
+    // CSS Injection removed (moved to style.css)
 
     // --- DATA MIGRATION TOOL ---
     // --- DATA MIGRATION TOOL (FILE BASED) ---
@@ -628,17 +621,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // --- Data Listeners ---
-onSnapshot(collection(db, "notes"), (snapshot) => {
-    console.log("Sunucudan veri geldi. Belge sayısı:", snapshot.size);
-    if (snapshot.empty) {
-        console.warn("Sunucuda hiç veri yok! (Yükleme yapmadıysanız normal)");
-    }
-    notes = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-    renderNotes();
-}, (error) => {
-    console.error("Veri okuma hatası:", error);
-    alert("Hata (Veri Okuma): " + error.message);
-});
+// --- Duplicate Data Listener Removed ---
 
 onSnapshot(doc(db, "metadata", "groups"), (doc) => {
     if (doc.exists()) {
