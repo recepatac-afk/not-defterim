@@ -1,5 +1,5 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-import { getFirestore, collection, doc, setDoc, deleteDoc, onSnapshot, updateDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+import { getFirestore, collection, doc, setDoc, deleteDoc, onSnapshot, updateDoc, query } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 import firebaseConfig from './firebase-config.js';
 
 // --- Firebase Init ---
