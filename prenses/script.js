@@ -122,7 +122,6 @@ window.insertShape = function (type) {
     const wrapper = document.getElementById('note-content-wrapper');
     // Ensure relative positioning
     wrapper.style.position = 'relative';
-    wrapper.style.overflow = 'hidden';
 
     const shapeId = 'shape-' + Date.now();
     const div = document.createElement('div');
@@ -132,42 +131,74 @@ window.insertShape = function (type) {
     div.style.top = '50px';
     div.style.width = '100px';
     div.style.height = '100px';
-    div.style.position = 'absolute'; // Ensure it's absolute
+    div.style.position = 'absolute';
 
-    let svgContent = '';
     const color = '#3b82f6';
+    let content = '';
 
-    // For simplicity, using Border/Radius for basic shapes for now to ensure perfect resizing
+    // Logic for specific shapes
     if (type === 'square' || type === 'rectangle') {
-        div.style.border = `2px solid ${color}`;
-    } else if (type === 'circle') {
-        div.style.border = `2px solid ${color}`;
+        div.style.border = `3px solid ${color}`;
+        if (type === 'rectangle') div.style.width = '160px';
+    }
+    else if (type === 'circle' || type === 'ellipse') {
+        div.style.border = `3px solid ${color}`;
         div.style.borderRadius = '50%';
-    } else if (type === 'ellipse') {
-        div.style.border = `2px solid ${color}`;
-        div.style.borderRadius = '50%';
-        if (type === 'rectangle') div.style.width = '150px';
-        if (type === 'ellipse') div.style.width = '150px';
-    } else {
-        // Fallback for arrows/stars using SVG background if needed, but for now simple box
-        div.innerText = "★"; // Placeholder for complex shapes
-        div.style.fontSize = "50px";
-        div.style.color = color;
+        if (type === 'ellipse') div.style.width = '160px';
+    }
+    else {
+        // SVG Shapes for Arrow, Star, Heart
+        div.style.display = 'flex';
+        div.style.alignItems = 'center';
+        div.style.justifyContent = 'center';
+
+        if (type.startsWith('arrow')) {
+            let rotation = 0;
+            if (type.includes('down')) rotation = 90;
+            if (type.includes('left')) rotation = 180;
+            if (type.includes('up')) rotation = 270;
+            // Use FontAwesome for reliable vector scaling without complex SVG logic
+            content = `<i class="fa-solid fa-arrow-right" style="font-size: 100%; width:100%; height:100%; display:flex; align-items:center; justify-content:center; color:${color}; transform: rotate(${rotation}deg);"></i>`;
+        } else if (type === 'star') {
+            content = `<i class="fa-regular fa-star" style="font-size: 100%; width:100%; height:100%; display:flex; align-items:center; justify-content:center; color:${color};"></i>`;
+        } else if (type === 'heart') {
+            content = `<i class="fa-regular fa-heart" style="font-size: 100%; width:100%; height:100%; display:flex; align-items:center; justify-content:center; color:${color};"></i>`;
+        }
     }
 
-    // Inner Text Area
+    // Inner Text Area (Empty by default)
     const textarea = document.createElement('textarea');
     textarea.className = 'shape-text';
-    textarea.placeholder = 'Yaz...';
-    // Double click to enable editing
+    textarea.placeholder = ''; // No default text
+    textarea.style.zIndex = '2'; // Text on top of SVG/Icon
+    textarea.style.position = 'absolute';
+    textarea.style.top = '0';
+    textarea.style.left = '0';
+
+    // Interaction Events for Activation
+    div.addEventListener('click', (e) => {
+        e.stopPropagation(); // Prevent deselect
+        selectShape(div);
+    });
     div.addEventListener('dblclick', () => {
         div.classList.add('editing');
         textarea.focus();
     });
-    // Blur to disable
     textarea.addEventListener('blur', () => {
         div.classList.remove('editing');
     });
+
+    if (content) {
+        const iconWrapper = document.createElement('div');
+        iconWrapper.style.width = '100%';
+        iconWrapper.style.height = '100%';
+        iconWrapper.style.position = 'absolute';
+        iconWrapper.style.top = '0';
+        iconWrapper.style.left = '0';
+        iconWrapper.style.zIndex = '1';
+        iconWrapper.innerHTML = content;
+        div.appendChild(iconWrapper);
+    }
 
     div.appendChild(textarea);
 
@@ -183,50 +214,65 @@ window.insertShape = function (type) {
     wrapper.appendChild(div);
     selectShape(div);
 
-    // Attach Events (Mouse & Touch)
-    div.addEventListener('mousedown', shapeMouseDown);
-    div.addEventListener('touchstart', shapeTouchStart, { passive: false });
+    // Initial Event Attachments
+    attachShapeEvents(div);
 
     // Hide menu
     document.getElementById('shape-menu').style.display = 'none';
 };
 
+function attachShapeEvents(el) {
+    el.addEventListener('mousedown', shapeMouseDown);
+    el.addEventListener('touchstart', shapeTouchStart, { passive: false });
+}
+
 function selectShape(el) {
-    if (selectedShape) selectedShape.classList.remove('selected');
+    // Deselect others
+    document.querySelectorAll('.draggable-shape').forEach(s => s.classList.remove('selected'));
     selectedShape = el;
     if (el) el.classList.add('selected');
 }
 
-// Mouse Down (Drag Init)
+// Global deselect when clicking background
+document.addEventListener('click', (e) => {
+    if (e.target.id === 'note-content-wrapper') {
+        selectShape(null);
+    }
+});
+
 function shapeMouseDown(e) {
-    // If editing text, don't drag
     if (e.target.tagName === 'TEXTAREA' && e.target.parentElement.classList.contains('editing')) return;
+
+    // Use currentTarget if event fired on child but bubbled, 
+    // BUT we need to distinguish handles. 
+    // Closest is safer.
+    const shape = e.target.closest('.draggable-shape');
+    if (!shape) return;
+
+    selectShape(shape);
 
     if (e.target.classList.contains('resize-handle')) {
         isResizing = true;
         currentResizeHandle = e.target.getAttribute('data-handle');
-        e.stopPropagation(); // Don't drag
+        e.stopPropagation();
         e.preventDefault();
-        // Resize Init
+
         startX = e.clientX;
         startY = e.clientY;
-        const rect = selectedShape.getBoundingClientRect();
+        const rect = shape.getBoundingClientRect();
         startWidth = rect.width;
         startHeight = rect.height;
-        startLeft = selectedShape.offsetLeft;
-        startTop = selectedShape.offsetTop;
+        startLeft = shape.offsetLeft;
+        startTop = shape.offsetTop;
 
         document.addEventListener('mousemove', shapeResizeMove);
         document.addEventListener('mouseup', shapeResizeUp);
-    } else if (e.target.classList.contains('draggable-shape') || e.target.closest('.draggable-shape')) {
+    } else {
         isDragging = true;
-        selectedShape = e.target.classList.contains('draggable-shape') ? e.target : e.target.closest('.draggable-shape');
-        selectShape(selectedShape);
-
         startX = e.clientX;
         startY = e.clientY;
-        startLeft = selectedShape.offsetLeft;
-        startTop = selectedShape.offsetTop;
+        startLeft = shape.offsetLeft;
+        startTop = shape.offsetTop;
 
         document.addEventListener('mousemove', shapeDragMove);
         document.addEventListener('mouseup', shapeDragUp);
@@ -252,9 +298,19 @@ function shapeResizeMove(e) {
     const dx = e.clientX - startX;
     const dy = e.clientY - startY;
 
-    if (currentResizeHandle.includes('e')) selectedShape.style.width = (startWidth + dx) + 'px';
-    if (currentResizeHandle.includes('s')) selectedShape.style.height = (startHeight + dy) + 'px';
-    // Logic for west/north requires adjusting left/top + width/height (Complex, implementing basic SE resize for now)
+    // Basic Resize (SE, SW, NE, NW Logic)
+    // Simplify to width/height for now to ensure stability
+    if (currentResizeHandle.includes('e')) selectedShape.style.width = Math.max(50, startWidth + dx) + 'px';
+    if (currentResizeHandle.includes('s')) selectedShape.style.height = Math.max(50, startHeight + dy) + 'px';
+
+    // For icon scaling
+    const icon = selectedShape.querySelector('i');
+    if (icon) {
+        // Font size relative to container
+        // const minDim = Math.min(parseInt(selectedShape.style.width), parseInt(selectedShape.style.height));
+        // icon.style.fontSize = (minDim * 0.8) + 'px'; 
+        // Actually 100% width/height in CSS handles it generally if display flex
+    }
 }
 
 function shapeResizeUp() {
@@ -263,7 +319,7 @@ function shapeResizeUp() {
     document.removeEventListener('mouseup', shapeResizeUp);
 }
 
-// Touch Support (Basic mapping)
+// Touch Support
 function shapeTouchStart(e) {
     if (e.touches.length > 1) return;
     const touch = e.touches[0];
@@ -272,26 +328,31 @@ function shapeTouchStart(e) {
         clientX: touch.clientX,
         clientY: touch.clientY,
         stopPropagation: () => e.stopPropagation(),
-        preventDefault: () => e.preventDefault()
+        preventDefault: () => e.preventDefault(),
+        // Mock closest
+        closest: (sel) => e.target.closest(sel)
     };
+
     shapeMouseDown(fakeEvent);
 
-    // Add touchmove listeners to document
     const touchMove = (tm) => {
         const t = tm.touches[0];
         const fe = { clientX: t.clientX, clientY: t.clientY };
         if (isDragging) shapeDragMove(fe);
         if (isResizing) shapeResizeMove(fe);
     };
+
     const touchEnd = () => {
         shapeDragUp();
         shapeResizeUp();
         document.removeEventListener('touchmove', touchMove);
         document.removeEventListener('touchend', touchEnd);
     };
+
     document.addEventListener('touchmove', touchMove, { passive: false });
     document.addEventListener('touchend', touchEnd);
 }
+
 
 window.closeModal = function () {
     const modal = document.getElementById('note-modal');
