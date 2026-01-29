@@ -264,21 +264,9 @@ function renderNotes() {
 
     container.innerHTML = filtered.map(note => createNoteCard(note)).join('');
 
-    // Re-attach listeners for dynamic elements
-    document.querySelectorAll('.edit-note-btn').forEach(btn => {
-        btn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            loadNoteForEdit(btn.dataset.id);
-        });
-    });
+    container.innerHTML = filtered.map(note => createNoteCard(note)).join('');
 
-    document.querySelectorAll('.delete-note-btn').forEach(btn => {
-        btn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            window.deleteNote(btn.dataset.id);
-        });
-    });
-
+    // Inline onclicks are used now, no need for manual listeners
     updateSidebarSubMenu();
     updateContextActions();
 }
@@ -663,7 +651,7 @@ document.addEventListener('DOMContentLoaded', () => {
     };
     document.body.appendChild(debugBtn);
 
-    alert("Not Defterim v11 - Sorunlar Giderildi! Keyifli Kullanımlar 🚀");
+    alert("Not Defterim v12 - Silme Hatası Giderildi! Keyifli Kullanımlar 🚀");
 });
 
 // --- Data Listeners ---
