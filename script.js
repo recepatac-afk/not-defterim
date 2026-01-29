@@ -171,12 +171,28 @@ window.filterByCategory = function (category, event) {
     renderNotes();
     updateSidebarSubMenu();
     updateContextActions();
+
+    // Auto-close sidebar on mobile
+    if (window.innerWidth <= 768) {
+        const sidebar = document.querySelector('.sidebar');
+        if (sidebar && sidebar.classList.contains('active')) {
+            sidebar.classList.remove('active');
+        }
+    }
 };
 
 window.filterBySub = function (sub, event) {
     if (event) event.stopPropagation();
     currentSubCategory = sub;
     renderNotes();
+
+    // Auto-close sidebar on mobile
+    if (window.innerWidth <= 768) {
+        const sidebar = document.querySelector('.sidebar');
+        if (sidebar && sidebar.classList.contains('active')) {
+            sidebar.classList.remove('active');
+        }
+    }
 };
 
 window.openGroupNewNote = function (groupName, e) {
@@ -656,7 +672,7 @@ document.addEventListener('DOMContentLoaded', () => {
         document.querySelector('.sidebar').classList.add('active');
     }
 
-    alert("Not Defterim v16 - Menü ARKA PLANI Düzeltildi! 📱");
+    alert("Not Defterim v17 - Mobil Deneyim İyileştirildi! 📱");
 });
 
 // --- Data Listeners ---

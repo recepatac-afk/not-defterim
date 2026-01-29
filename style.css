@@ -918,6 +918,8 @@ textarea {
         /* Force solid dark background */
         box-shadow: 10px 0 20px rgba(0, 0, 0, 0.5);
         /* Strong shadow */
+        overflow-y: auto;
+        /* Enable internal scrolling */
     }
 
     .sidebar.active {
