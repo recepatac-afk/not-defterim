@@ -672,7 +672,7 @@ document.addEventListener('DOMContentLoaded', () => {
         document.querySelector('.sidebar').classList.add('active');
     }
 
-    alert("Not Defterim v17 - Mobil Deneyim İyileştirildi! 📱");
+    alert("Not Defterim v18 - Tüm Notlar Düzenlendi! 🗂️");
 });
 
 // --- Data Listeners ---
