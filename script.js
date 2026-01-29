@@ -649,7 +649,7 @@ document.addEventListener('DOMContentLoaded', () => {
     };
     document.body.appendChild(debugBtn);
 
-    alert("Not Defterim v5 Başarıyla Yüklendi! (Hata Bildirim Modu Açık)");
+    alert("Not Defterim v7 - Sorunlar Giderildi! Keyifli Kullanımlar 🚀");
 });
 
 // --- Data Listeners ---
