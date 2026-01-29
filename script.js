@@ -656,7 +656,7 @@ document.addEventListener('DOMContentLoaded', () => {
         document.querySelector('.sidebar').classList.add('active');
     }
 
-    alert("Not Defterim v15 - Menü Sabitlendi! 📱");
+    alert("Not Defterim v16 - Menü ARKA PLANI Düzeltildi! 📱");
 });
 
 // --- Data Listeners ---
