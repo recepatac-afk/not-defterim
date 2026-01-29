@@ -652,7 +652,7 @@ document.addEventListener('DOMContentLoaded', () => {
     };
     document.body.appendChild(debugBtn);
 
-    alert("Not Defterim v7 - Sorunlar Giderildi! Keyifli Kullanımlar 🚀");
+    alert("Not Defterim v9 - Sorunlar Giderildi! Keyifli Kullanımlar 🚀");
 });
 
 // --- Data Listeners ---
