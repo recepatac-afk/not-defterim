@@ -386,10 +386,17 @@ function loadNoteForEdit(id) {
 
     window.openModal(true);
 
-    document.getElementById('note-id').value = note.id;
-    document.getElementById('note-title').value = note.title;
-    document.getElementById('note-content').value = note.content;
-    document.getElementById('note-category').value = note.category;
+    window.openModal(true);
+
+    const titleInput = document.getElementById('note-title-input');
+    if (titleInput) titleInput.value = note.title;
+
+    // Check for both possible content IDs just in case
+    const contentInput = document.getElementById('note-content') || document.getElementById('note-content-text');
+    if (contentInput) contentInput.value = note.content;
+
+    const catSelect = document.getElementById('note-category-select');
+    if (catSelect) catSelect.value = note.category;
 
     const subInput = document.getElementById('note-subcategory-input');
     if (note.category === 'egitim') {
@@ -652,7 +659,7 @@ document.addEventListener('DOMContentLoaded', () => {
     };
     document.body.appendChild(debugBtn);
 
-    alert("Not Defterim v9 - Sorunlar Giderildi! Keyifli Kullanımlar 🚀");
+    alert("Not Defterim v10 - Lütfen Sayfayı Yenileyin! 🚀");
 });
 
 // --- Data Listeners ---
