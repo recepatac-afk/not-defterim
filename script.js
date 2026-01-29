@@ -236,8 +236,11 @@ const categoryLabels = {
 };
 
 function renderNotes() {
-    const container = document.getElementById('notes-grid');
-    if (!container) return;
+    const container = document.getElementById('notes-container'); // Fixed ID from notes-grid
+    if (!container) {
+        console.error("HATA: Render container 'notes-container' bulunamadı!");
+        return;
+    }
 
     // Filter
     console.log("Filtreleme Başladı. Kategori:", currentCategory, "Alt Kategori:", currentSubCategory);
