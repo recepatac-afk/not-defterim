@@ -646,7 +646,7 @@ document.addEventListener('DOMContentLoaded', () => {
     };
     document.body.appendChild(debugBtn);
 
-    alert("Not Defterim v4 Başarıyla Yüklendi!");
+    alert("Not Defterim v5 Başarıyla Yüklendi! (Hata Bildirim Modu Açık)");
 });
 
 // --- Data Listeners ---
