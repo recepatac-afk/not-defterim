@@ -316,12 +316,15 @@ function createNoteCard(note) {
                 </div>
             </div>
              <div class="note-actions" style="display: flex; gap: 0.5rem; margin-top: 1rem;">
-                <button class="btn-secondary edit-note-btn" data-id="${note.id}" style="flex: 1; padding:0.5rem;">Düzenle</button>
-                <button class="btn-secondary delete-note-btn" data-id="${note.id}" style="flex: 1; padding:0.5rem; color:#ef4444;">Sil</button>
+                <button class="btn-secondary edit-note-btn" onclick="event.stopPropagation(); loadNoteForEdit('${note.id}')" style="flex: 1; padding:0.5rem; cursor:pointer;">Düzenle</button>
+                <button class="btn-secondary delete-note-btn" onclick="event.stopPropagation(); window.deleteNote('${note.id}')" style="flex: 1; padding:0.5rem; color:#ef4444; cursor:pointer;">Sil</button>
             </div>
         </div>
     </div>`;
 }
+
+// Make globally accessible for onclick events in HTML
+window.loadNoteForEdit = loadNoteForEdit;
 
 function updateSidebarSubMenu() {
     const subMenu = document.getElementById('education-sub-menu');
