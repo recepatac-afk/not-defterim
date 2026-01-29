@@ -1030,7 +1030,7 @@ document.addEventListener('DOMContentLoaded', () => {
             document.body.classList.remove('mobile-view-active'); // Ensure menu is shown
         }
 
-        alert("Not Defterim (Kızım) v24 - İyi Çalışmalar Prenses! 🎀");
+        alert("Not Defterim (Kızım) v27 - Şekiller Tamam! 🎀");
     });
 
     // --- Data Listeners ---
