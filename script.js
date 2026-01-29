@@ -537,8 +537,12 @@ document.addEventListener('DOMContentLoaded', () => {
             // DEBUG ALERT FOR FIRST LOAD
             // alert("Veriler indirildi: " + notes.length + " adet.");
 
-            // Update Stats
-            if (document.getElementById('total-notes-count')) document.getElementById('total-notes-count').innerText = notes.length;
+            // Update Stats (Corrected IDs)
+            const countTotal = document.getElementById('count-total');
+            if (countTotal) countTotal.innerText = notes.length;
+
+            const countFav = document.getElementById('count-favorites');
+            if (countFav) countFav.innerText = notes.filter(n => n.isFavorite).length;
 
             // Render
             renderNotes();
@@ -659,7 +663,7 @@ document.addEventListener('DOMContentLoaded', () => {
     };
     document.body.appendChild(debugBtn);
 
-    alert("Not Defterim v10 - Lütfen Sayfayı Yenileyin! 🚀");
+    alert("Not Defterim v11 - Sorunlar Giderildi! Keyifli Kullanımlar 🚀");
 });
 
 // --- Data Listeners ---
