@@ -249,8 +249,11 @@
                     <div class="color-palette"
                         style="display:flex; gap:0.5rem; border-right: 1px solid rgba(255,255,255,0.1); padding-right: 1rem;">
                         <div class="palette-color active"
-                            style="background:#000000; width:24px; height:24px; border-radius:50%; cursor:pointer;"
-                            data-color="#000000"></div>
+                            style="background:#ffffff; width:24px; height:24px; border-radius:50%; cursor:pointer; border: 2px solid #e2e8f0;"
+                            data-color="#ffffff" title="Beyaz"></div>
+                        <div class="palette-color"
+                            style="background:#000000; width:24px; height:24px; border-radius:50%; cursor:pointer; border: 1px solid rgba(255,255,255,0.2);"
+                            data-color="#000000" title="Siyah"></div>
                         <div class="palette-color"
                             style="background:#ef4444; width:24px; height:24px; border-radius:50%; cursor:pointer;"
                             data-color="#ef4444"></div>
@@ -266,6 +269,33 @@
                     </div>
 
                     <!-- Tools -->
+                    <div style="position:relative;">
+                        <button id="btn-shapes" class="icon-btn" title="Şekil Ekle" onclick="toggleShapeMenu()"
+                            style="font-size: 1.1rem;"><i class="fa-solid fa-shapes"></i></button>
+                        <div id="shape-menu" class="shape-dropdown" style="display:none;">
+                            <button onclick="insertShape('square')" title="Kare"><i
+                                    class="fa-regular fa-square"></i></button>
+                            <button onclick="insertShape('rectangle')" title="Dikdörtgen"><i
+                                    class="fa-regular fa-square" style="transform: scaleX(1.5);"></i></button>
+                            <button onclick="insertShape('circle')" title="Daire"><i
+                                    class="fa-regular fa-circle"></i></button>
+                            <button onclick="insertShape('ellipse')" title="Elips"><i
+                                    class="fa-solid fa-egg"></i></button>
+                            <button onclick="insertShape('arrow-up')" title="Yukarı Ok"><i
+                                    class="fa-solid fa-arrow-up"></i></button>
+                            <button onclick="insertShape('arrow-down')" title="Aşağı Ok"><i
+                                    class="fa-solid fa-arrow-down"></i></button>
+                            <button onclick="insertShape('arrow-left')" title="Sola Ok"><i
+                                    class="fa-solid fa-arrow-left"></i></button>
+                            <button onclick="insertShape('arrow-right')" title="Sağa Ok"><i
+                                    class="fa-solid fa-arrow-right"></i></button>
+                            <button onclick="insertShape('star')" title="Yıldız"><i
+                                    class="fa-regular fa-star"></i></button>
+                            <button onclick="insertShape('heart')" title="Kalp"><i
+                                    class="fa-regular fa-heart"></i></button>
+                        </div>
+                    </div>
+
                     <button id="btn-text-tool" class="icon-btn" title="Metin Ekle" style="font-size: 1.1rem;"><i
                             class="fa-solid fa-font"></i></button>
                     <button id="btn-eraser" class="icon-btn" title="Silgi" style="font-size: 1.1rem;"><i

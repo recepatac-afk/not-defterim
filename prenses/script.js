@@ -43,6 +43,18 @@ window.openModal = function (isEdit = false) {
             if (noteTitleInput) noteTitleInput.value = '';
             if (noteContentInput) noteContentInput.value = '';
 
+            // --- SET DEFAULT WHITE BACKGROUND ---
+            const wrapper = document.getElementById('note-content-wrapper');
+            if (wrapper) {
+                wrapper.style.backgroundColor = '#ffffff';
+                if (noteContentInput) noteContentInput.style.color = '#1e293b'; // Dark text
+            }
+            // Update Palette UI
+            document.querySelectorAll('.palette-color').forEach(el => {
+                if (el.getAttribute('data-color') === '#ffffff') el.classList.add('active');
+                else el.classList.remove('active');
+            });
+
             // Context-aware defaults
             if (currentCategory && currentCategory !== 'all' && categorySelect) {
                 categorySelect.value = currentCategory;
@@ -94,6 +106,43 @@ window.openModal = function (isEdit = false) {
         console.error(err);
         alert("Modal Açılma Hatası: " + err.message);
     }
+};
+
+// --- Shape Logic ---
+window.toggleShapeMenu = function () {
+    const menu = document.getElementById('shape-menu');
+    if (menu) menu.style.display = (menu.style.display === 'none' || menu.style.display === '') ? 'grid' : 'none';
+};
+
+window.insertShape = function (type) {
+    let svgContent = '';
+    const color = '#3b82f6'; // Blue default
+
+    // Simple SVGs for shapes
+    if (type === 'square') svgContent = `<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><rect x="10" y="10" width="80" height="80" stroke="${color}" stroke-width="4" fill="none"/></svg>`;
+    else if (type === 'rectangle') svgContent = `<svg width="150" height="100" xmlns="http://www.w3.org/2000/svg"><rect x="10" y="25" width="130" height="50" stroke="${color}" stroke-width="4" fill="none"/></svg>`;
+    else if (type === 'circle') svgContent = `<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="40" stroke="${color}" stroke-width="4" fill="none"/></svg>`;
+    else if (type === 'ellipse') svgContent = `<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><ellipse cx="50" cy="50" rx="45" ry="30" stroke="${color}" stroke-width="4" fill="none"/></svg>`;
+    else if (type === 'arrow-up') svgContent = `<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><path d="M50 10 L50 90 M20 40 L50 10 L80 40" stroke="${color}" stroke-width="4" fill="none"/></svg>`;
+    else if (type === 'arrow-down') svgContent = `<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><path d="M50 10 L50 90 M20 60 L50 90 L80 60" stroke="${color}" stroke-width="4" fill="none"/></svg>`;
+    else if (type === 'arrow-left') svgContent = `<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><path d="M90 50 L10 50 M40 20 L10 50 L40 80" stroke="${color}" stroke-width="4" fill="none"/></svg>`;
+    else if (type === 'arrow-right') svgContent = `<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><path d="M10 50 L90 50 M60 20 L90 50 L60 80" stroke="${color}" stroke-width="4" fill="none"/></svg>`;
+    else if (type === 'star') svgContent = `<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><polygon points="50,10 61,35 90,35 66,55 75,85 50,70 25,85 34,55 10,35 39,35" stroke="${color}" stroke-width="4" fill="none"/></svg>`;
+    else if (type === 'heart') svgContent = `<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><path d="M50 85 C50 85 10 55 10 30 A15 15 0 0 1 40 30 A10 10 0 0 1 50 40 A10 10 0 0 1 60 30 A15 15 0 0 1 90 30 C90 55 50 85 50 85" stroke="${color}" stroke-width="4" fill="none"/></svg>`;
+
+    if (svgContent) {
+        // Convert to Blob/DataURL
+        const blob = new Blob([svgContent], { type: 'image/svg+xml' });
+        const viewer = new FileReader();
+        viewer.onload = function (e) {
+            currentAttachments.push({ type: 'image', content: e.target.result });
+            renderAttachments();
+        };
+        viewer.readAsDataURL(blob);
+    }
+
+    // Hide menu after selection
+    document.getElementById('shape-menu').style.display = 'none';
 };
 
 window.closeModal = function () {
