@@ -151,18 +151,41 @@
                 </div>
             </header>
 
-            <div class="filter-bar" style="padding: 1rem 2rem; display: flex; gap: 1rem; align-items: center;">
+            <div class="filter-bar"
+                style="padding: 1rem 2rem; display: flex; gap: 1rem; align-items: center; position: relative;">
                 <div class="pill-tabs">
-                    <button class="pill active">Hepsi</button>
-                    <button class="pill">Kişisel</button>
-                    <button class="pill">Diğerleri</button>
+                    <button class="pill active" onclick="window.setQuickFilter('all', this)">Hepsi</button>
+                    <button class="pill" onclick="window.setQuickFilter('kisisel', this)">Kişisel</button>
+                    <button class="pill" onclick="window.setQuickFilter('diger', this)">Diğerleri</button>
                 </div>
                 <div style="margin-left: auto; display: flex; gap: 0.5rem;">
-                    <button id="btn-view-toggle" class="icon-btn-outline"><i class="fa-solid fa-border-all"></i>
-                        Pano</button>
-                    <button id="btn-sort" class="icon-btn-outline"><i class="fa-solid fa-arrow-down-wide-short"></i>
-                        Sırala</button>
-                    <button id="btn-filter" class="icon-btn-outline"><i class="fa-solid fa-filter"></i>
+                    <button id="btn-view-toggle" class="icon-btn-outline" onclick="window.toggleViewMode(this)">
+                        <i class="fa-solid fa-border-all"></i> Pano
+                    </button>
+
+                    <div style="position: relative;">
+                        <button id="btn-sort" class="icon-btn-outline"
+                            onclick="document.getElementById('sort-dropdown').classList.toggle('show')">
+                            <i class="fa-solid fa-arrow-down-wide-short"></i> Sırala
+                        </button>
+                        <div id="sort-dropdown" class="sort-menu">
+                            <div class="sort-option active"
+                                onclick="window.setSort('date-desc'); document.getElementById('sort-dropdown').classList.remove('show')">
+                                Tarih (Yeni)</div>
+                            <div class="sort-option"
+                                onclick="window.setSort('date-asc'); document.getElementById('sort-dropdown').classList.remove('show')">
+                                Tarih (Eski)</div>
+                            <div class="sort-option"
+                                onclick="window.setSort('az'); document.getElementById('sort-dropdown').classList.remove('show')">
+                                İsim (A-Z)</div>
+                            <div class="sort-option"
+                                onclick="window.setSort('za'); document.getElementById('sort-dropdown').classList.remove('show')">
+                                İsim (Z-A)</div>
+                        </div>
+                    </div>
+
+                    <button id="btn-filter" class="icon-btn-outline" onclick="window.filterByFavorites()"><i
+                            class="fa-solid fa-filter"></i>
                         Filtrele</button>
                 </div>
             </div>
@@ -397,7 +420,7 @@
     </div> <!-- End note-modal overlay -->
     </div>
 
-    <script type="module" src="script.js?v=19"></script>
+    <script type="module" src="script.js?v=20"></script>
 </body>
 
 </html>

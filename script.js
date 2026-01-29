@@ -235,8 +235,8 @@ window.createNewGroup = async function (e) {
 };
 
 // --- Internal Variables & Helpers ---
-let currentCategory = 'all';
-let currentSubCategory = null;
+// let currentCategory = 'all'; // Moved to top
+// let currentSubCategory = null; // Moved to top
 let currentType = 'text';
 let currentAttachments = [];
 
@@ -251,38 +251,97 @@ const categoryLabels = {
     'finans': { label: 'Finans', color: '#059669', bg: 'rgba(5, 150, 105, 0.1)' }
 };
 
+// --- Filter & Sort Globals ---
+let currentSort = 'date-desc';
+let currentViewMode = 'grid';
+let currentCategory = 'all';
+let currentSubCategory = null;
+
+// --- Helper Functions ---
+window.setSort = function (mode) {
+    currentSort = mode;
+    console.log("Sıralama:", mode);
+    // Update UI active state if needed
+    document.querySelectorAll('.sort-option').forEach(el => el.classList.remove('active'));
+    // Simple text match to highlight would go here, skipping for brevity
+    renderNotes();
+};
+
+window.toggleViewMode = function (btn) {
+    currentViewMode = currentViewMode === 'grid' ? 'list' : 'grid';
+    // Update Icon
+    const icon = btn.querySelector('i');
+    if (currentViewMode === 'list') {
+        icon.className = 'fa-solid fa-bars';
+        btn.innerHTML = '<i class="fa-solid fa-bars"></i> Liste';
+    } else {
+        icon.className = 'fa-solid fa-border-all';
+        btn.innerHTML = '<i class="fa-solid fa-border-all"></i> Pano';
+    }
+    renderNotes();
+};
+
+window.setQuickFilter = function (type, btn) {
+    // UI Update
+    document.querySelectorAll('.pill').forEach(p => p.classList.remove('active'));
+    btn.classList.add('active');
+
+    // Logic
+    if (type === 'all') {
+        currentCategory = 'all';
+    } else if (type === 'kisisel') {
+        currentCategory = 'kisisel_filter'; // Special flag handled in render
+    } else {
+        currentCategory = 'diger_filter';   // Special flag
+    }
+    currentSubCategory = null;
+    renderNotes();
+};
+
 function renderNotes() {
-    const container = document.getElementById('notes-container'); // Fixed ID from notes-grid
-    if (!container) {
-        console.error("HATA: Render container 'notes-container' bulunamadı!");
-        return;
+    const container = document.getElementById('notes-container');
+    if (!container) return;
+
+    // Apply View Mode Class
+    if (currentViewMode === 'list') {
+        container.classList.add('list-view');
+    } else {
+        container.classList.remove('list-view');
     }
 
     // Filter
-    console.log("Filtreleme Başladı. Kategori:", currentCategory, "Alt Kategori:", currentSubCategory);
-    console.log("Mevcut Notlar:", notes);
-
     let filtered = notes.filter(n => {
-        // Debug each note
+        if (currentCategory === 'all') return true;
+        if (currentCategory === 'favorites') return n.isFavorite; // Handle favorites special case
+
+        // Custom Quick Filters
+        if (currentCategory === 'kisisel_filter') {
+            // "Kişisel" maps to: genel, fikir, karar (Example logic)
+            return ['genel', 'fikir', 'karar'].includes(n.category);
+        }
+        if (currentCategory === 'diger_filter') {
+            // "Diğerleri" maps to anything ELSE
+            return !['genel', 'fikir', 'karar', 'is', 'egitim'].includes(n.category);
+        }
+
+        // Standard Category Filter
         const catMatch = (currentCategory === 'all' || n.category === currentCategory);
         const subMatch = (currentCategory !== 'egitim' || !currentSubCategory || n.subCategory === currentSubCategory);
-
-        if (!catMatch) console.log(`Not elendi (${n.title}): Kategori uymuyor (${n.category} != ${currentCategory})`);
-        if (catMatch && !subMatch) console.log(`Not elendi (${n.title}): Alt kategori uymuyor (${n.subCategory} != ${currentSubCategory})`);
-
         return catMatch && subMatch;
     });
 
-    console.log("Filtrelenmiş Sonuç:", filtered.length);
-
-    // Sort (Newest first)
-    filtered.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+    // Sort
+    filtered.sort((a, b) => {
+        if (currentSort === 'date-desc') return new Date(b.createdAt) - new Date(a.createdAt);
+        if (currentSort === 'date-asc') return new Date(a.createdAt) - new Date(b.createdAt);
+        if (currentSort === 'az') return a.title.localeCompare(b.title);
+        if (currentSort === 'za') return b.title.localeCompare(a.title);
+        return 0;
+    });
 
     container.innerHTML = filtered.map(note => createNoteCard(note)).join('');
 
-    container.innerHTML = filtered.map(note => createNoteCard(note)).join('');
-
-    // Inline onclicks are used now, no need for manual listeners
+    // Update listeners (Context actions etc.)
     updateSidebarSubMenu();
     updateContextActions();
 }
@@ -672,7 +731,7 @@ document.addEventListener('DOMContentLoaded', () => {
         document.querySelector('.sidebar').classList.add('active');
     }
 
-    alert("Not Defterim v19 - Menü ve Sayaçlar Hazır! 🚀");
+    alert("Not Defterim v20 - Filtreler ve Sıralama Aktif! 🌪️");
 });
 
 // --- Data Listeners ---
