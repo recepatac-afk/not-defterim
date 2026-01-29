@@ -133,11 +133,13 @@ window.saveNote = async function () {
     };
 
     try {
+        // alert("Veritabanına yazılıyor..."); // Debug
         await setDoc(doc(db, "notes", noteData.id), noteData);
+        alert("Not Başarıyla Kaydedildi! (ID: " + noteData.id + ")");
         window.closeModal();
     } catch (e) {
         console.error("Kaydetme hatası:", e);
-        alert("Kaydedilemedi: " + e.message);
+        alert("KAYDETME HATASI: " + e.message);
     }
 };
 
@@ -509,23 +511,31 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // --- REAL-TIME DATA LISTENER (onSnapshot) ---
-    // This was missing! Adding it back to listen for changes.
-    const q = query(collection(db, "notes"));
-    const unsubscribe = onSnapshot(q, (snapshot) => {
-        notes = [];
-        snapshot.forEach((doc) => {
-            notes.push({ id: doc.id, ...doc.data() });
+    console.log("Listener kuruluyor...");
+    try {
+        const q = query(collection(db, "notes"));
+        const unsubscribe = onSnapshot(q, (snapshot) => {
+            notes = [];
+            snapshot.forEach((doc) => {
+                notes.push({ id: doc.id, ...doc.data() });
+            });
+            console.log("Sunucudan veri geldi. Belge sayısı:", notes.length);
+
+            // DEBUG ALERT FOR FIRST LOAD
+            // alert("Veriler indirildi: " + notes.length + " adet.");
+
+            // Update Stats
+            if (document.getElementById('total-notes-count')) document.getElementById('total-notes-count').innerText = notes.length;
+
+            // Render
+            renderNotes();
+        }, (error) => {
+            console.error("Veri okuma hatası:", error);
+            alert("VERİ OKUMA HATASI: " + error.message); // Show error to user
         });
-        console.log("Sunucudan veri geldi. Belge sayısı:", notes.length);
-
-        // Update Stats
-        if (document.getElementById('total-notes-count')) document.getElementById('total-notes-count').innerText = notes.length;
-
-        // Render
-        renderNotes();
-    }, (error) => {
-        console.error("Veri okuma hatası:", error);
-    });
+    } catch (err) {
+        alert("Listener Hatası: " + err.message);
+    }
 
     // Mobile Menu & Other Initializations (retained)
     const mobileMenuBtn = document.createElement('button');
