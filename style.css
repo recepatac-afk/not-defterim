@@ -904,12 +904,6 @@ textarea {
         overflow: auto;
     }
 
-    .app-container {
-        flex-direction: column;
-        height: 100vh;
-        overflow: hidden;
-    }
-
     .sidebar {
         position: fixed;
         left: -100%;

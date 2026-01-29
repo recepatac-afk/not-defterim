@@ -651,7 +651,12 @@ document.addEventListener('DOMContentLoaded', () => {
     };
     document.body.appendChild(debugBtn);
 
-    alert("Not Defterim v14 - Mobil Menü Düzeltildi! 📱");
+    // Mobile: Open sidebar by default if requested
+    if (window.innerWidth <= 768) {
+        document.querySelector('.sidebar').classList.add('active');
+    }
+
+    alert("Not Defterim v15 - Menü Sabitlendi! 📱");
 });
 
 // --- Data Listeners ---
