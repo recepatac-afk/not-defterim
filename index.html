@@ -33,13 +33,13 @@
 
             <!-- Summary Cards (Functional Influence) -->
             <div class="summary-cards" style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem;">
-                <div class="summary-card"
-                    style="background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.2); padding: 0.75rem; border-radius: 12px;">
+                <div class="summary-card" onclick="window.filterByCategory('all', null)"
+                    style="background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.2); padding: 0.75rem; border-radius: 12px; cursor: pointer;">
                     <div style="font-size: 0.7rem; color: #3b82f6; font-weight: 600;">Toplam</div>
                     <div id="count-total" style="font-size: 1.25rem; font-weight: 700; color: #3b82f6;">0</div>
                 </div>
-                <div class="summary-card"
-                    style="background: rgba(249, 115, 22, 0.1); border: 1px solid rgba(249, 115, 22, 0.2); padding: 0.75rem; border-radius: 12px;">
+                <div class="summary-card" onclick="window.filterByFavorites()"
+                    style="background: rgba(249, 115, 22, 0.1); border: 1px solid rgba(249, 115, 22, 0.2); padding: 0.75rem; border-radius: 12px; cursor: pointer;">
                     <div style="font-size: 0.7rem; color: var(--primary-color); font-weight: 600;">Favoriler</div>
                     <div id="count-favorites"
                         style="font-size: 1.25rem; font-weight: 700; color: var(--primary-color);">0</div>
@@ -56,8 +56,10 @@
                 Menü</div>
             <nav class="main-nav">
                 <ul>
-                    <li class="active" data-view="all"><i class="fa-solid fa-house"></i> Ana Sayfa</li>
-                    <li data-view="favorites"><i class="fa-solid fa-star"></i> Favoriler</li>
+                    <li class="active" onclick="window.filterByCategory('all', event)" style="cursor: pointer;"><i
+                            class="fa-solid fa-layer-group"></i> Tüm Notlar</li>
+                    <li onclick="window.filterByFavorites()" style="cursor: pointer;"><i class="fa-solid fa-star"></i>
+                        Favoriler</li>
                 </ul>
             </nav>
 
@@ -314,11 +316,6 @@
             <div id="attachment-preview-container" class="hidden"
                 style="margin-top:1rem; padding:0.75rem; background:rgba(255,255,255,0.05); border-radius:8px; border: 1px solid var(--border-color);">
                 <div style="font-size:0.75rem; color:var(--text-muted); margin-bottom:0.5rem;">Ekli Dosya:</div>
-                <li class="cat-item active" data-category="all"
-                    style="width: 100%; display: flex; justify-content: flex-start; padding: 0.75rem 1rem; background: var(--primary-color); border: none; margin-bottom: 1rem;">
-                    <i class="fa-solid fa-layer-group" style="color: white;"></i>
-                    <span style="color: white; font-size: 0.9rem; font-weight: 600;">Tüm Notlar</span>
-                </li>
                 <div id="attachment-item" style="display:flex; align-items:center; gap:0.75rem; cursor:pointer;"
                     title="Ek Önizlemesi">
                     <i class="fa-solid fa-paperclip" style="color:var(--primary-color);"></i>
@@ -400,7 +397,7 @@
     </div> <!-- End note-modal overlay -->
     </div>
 
-    <script type="module" src="script.js?v=18"></script>
+    <script type="module" src="script.js?v=19"></script>
 </body>
 
 </html>
