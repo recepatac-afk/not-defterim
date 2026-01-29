@@ -651,7 +651,7 @@ document.addEventListener('DOMContentLoaded', () => {
     };
     document.body.appendChild(debugBtn);
 
-    alert("Not Defterim v13 - Hazır! Sayfayı Yenileyip Deneyin. 🚀");
+    alert("Not Defterim v14 - Mobil Menü Düzeltildi! 📱");
 });
 
 // --- Data Listeners ---
