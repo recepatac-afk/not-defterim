@@ -731,7 +731,7 @@ document.addEventListener('DOMContentLoaded', () => {
         document.querySelector('.sidebar').classList.add('active');
     }
 
-    alert("Not Defterim v20 - Filtreler ve Sıralama Aktif! 🌪️");
+    alert("Not Defterim v21 - Sıralama Menüsü Gizlendi! 🕵️");
 });
 
 // --- Data Listeners ---
