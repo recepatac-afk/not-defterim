@@ -9,452 +9,449 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="style.css?v=23">
+    <link rel="stylesheet" href="style.css?v=26">
 </head>
 
 <body>
     <div class="app-container">
-        <!-- Sidebar -->
-        <aside class="sidebar">
-            <div class="logo-area">
-                <i class="fa-solid fa-moon"></i>
-                <span>Not Defterim</span>
-            </div>
+        <!-- ... -->
+        <script type="module" src="script.js?v=26"></script>
+</body>
 
-            <!-- User Profile Section - Updated -->
-            <div class="user-profile" id="user-profile-btn" style="cursor:pointer;">
-                <div class="user-avatar" style="background: var(--primary-color);">RA</div>
-                <div class="user-info">
-                    <div class="user-name" style="text-transform: uppercase;">Recep Ataç</div>
-                    <div class="user-role" style="text-transform: uppercase;">Ürün Sahibi</div>
-                </div>
-                <i class="fa-solid fa-chevron-down" style="font-size: 0.75rem; margin-left: auto; opacity: 0.5;"></i>
-            </div>
-
-            <!-- Summary Cards (Functional Influence) -->
-            <div class="summary-cards" style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem;">
-                <div class="summary-card" onclick="window.filterByCategory('all', null)"
-                    style="background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.2); padding: 0.75rem; border-radius: 12px; cursor: pointer;">
-                    <div style="font-size: 0.7rem; color: #3b82f6; font-weight: 600;">Toplam</div>
-                    <div id="count-total" style="font-size: 1.25rem; font-weight: 700; color: #3b82f6;">0</div>
-                </div>
-                <div class="summary-card" onclick="window.filterByFavorites()"
-                    style="background: rgba(249, 115, 22, 0.1); border: 1px solid rgba(249, 115, 22, 0.2); padding: 0.75rem; border-radius: 12px; cursor: pointer;">
-                    <div style="font-size: 0.7rem; color: var(--primary-color); font-weight: 600;">Favoriler</div>
-                    <div id="count-favorites"
-                        style="font-size: 1.25rem; font-weight: 700; color: var(--primary-color);">0</div>
-                </div>
-            </div>
-
-            <button class="btn-primary-large" id="btn-new-note" style="margin-top: 0.5rem;"
-                onclick="window.openModal()">
-                <i class="fa-solid fa-plus"></i> Yeni Not
-            </button>
-
-            <div class="nav-section-label"
-                style="font-size: 0.7rem; text-transform: uppercase; color: var(--text-muted); letter-spacing: 0.05em; margin-top: 1rem;">
-                Menü</div>
-            <nav class="main-nav">
-                <ul>
-                    <li class="active" onclick="window.filterByCategory('all', event)" style="cursor: pointer;"><i
-                            class="fa-solid fa-layer-group"></i> Tüm Notlar</li>
-                    <li onclick="window.filterByFavorites()" style="cursor: pointer;"><i class="fa-solid fa-star"></i>
-                        Favoriler</li>
-                </ul>
-            </nav>
-
-            <div class="nav-section-label"
-                style="font-size: 0.7rem; text-transform: uppercase; color: var(--text-muted); letter-spacing: 0.05em; margin-top: 0.5rem;">
-                Kategoriler</div>
-            <div class="category-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem;">
-                <div class="cat-item" data-category="genel" onclick="window.filterByCategory('genel', event)">
-                    <i class="fa-solid fa-note-sticky" style="color: #64748b;"></i>
-                    <span>Genel</span>
-                </div>
-                <div class="cat-item" data-category="is" onclick="window.filterByCategory('is', event)">
-                    <i class="fa-solid fa-briefcase" style="color: #a855f7;"></i>
-                    <span>İş</span>
-                </div>
-                <div class="cat-item" data-category="gorev" onclick="window.filterByCategory('gorev', event)">
-                    <i class="fa-solid fa-check-double" style="color: #10b981;"></i>
-                    <span>Görev</span>
-                </div>
-                <div class="cat-item" data-category="fikir" onclick="window.filterByCategory('fikir', event)">
-                    <i class="fa-solid fa-lightbulb" style="color: #f59e0b;"></i>
-                    <span>Fikir</span>
-                </div>
-                <div class="cat-item" data-category="toplanti" onclick="window.filterByCategory('toplanti', event)">
-                    <i class="fa-solid fa-users" style="color: #3b82f6;"></i>
-                    <span>Toplantı</span>
-                </div>
-                <div class="cat-item" data-category="karar" onclick="window.filterByCategory('karar', event)">
-                    <i class="fa-solid fa-bullseye" style="color: #ef4444;"></i>
-                    <span>Karar</span>
-                </div>
-                <div class="cat-item" data-category="egitim" onclick="window.filterByCategory('egitim', event)">
-                    <i class="fa-solid fa-graduation-cap" style="color: #4f46e5;"></i>
-                    <span>Eğitim</span>
-                </div>
-                <div class="cat-item" data-category="finans" onclick="window.filterByCategory('finans', event)">
-                    <i class="fa-solid fa-coins" style="color: #059669;"></i>
-                    <span>Finans</span>
-                </div>
-            </div>
-
-            <!-- Education Sub Menu (Hidden by default) -->
-            <div id="education-sub-menu" class="sub-menu" style="display: none;">
-                <!-- Dynamic Content -->
-            </div>
-
-            <div class="ai-section">
-                <h3><i class="fa-solid fa-wand-magic-sparkles"></i> AI Analiz</h3>
-                <div class="ai-card" id="ai-quick-view">
-                    <!-- AI Hızlı Görüş İçeriği Buraya -->
-                    <div class="ai-placeholder">
-                        <i class="fa-solid fa-robot"></i>
-                        <p>Son notlarınız inceleniyor...</p>
-                    </div>
-                </div>
-                <button id="btn-deep-analysis" class="btn-secondary"
-                    style="background: rgba(168, 85, 247, 0.2); border-color: rgba(168, 85, 247, 0.3); color: #c084fc;">
-                    <i class="fa-solid fa-brain"></i> Derin Analiz
-                </button>
-            </div>
-
-            <div class="storage-info">
-                <i class="fa-solid fa-database"></i>
-                <span id="storage-status">Yerel Kayıt Aktif</span>
-            </div>
-        </aside>
-
-        <!-- Main Content (Hidden on Mobile Initially) -->
-        <main class="main-content">
-            <header class="top-bar">
-                <div class="header-left">
-                    <button id="mobile-back-btn" class="icon-btn-outline" style="display: none; margin-right: 0.5rem;"
-                        onclick="window.showMobileMenu()">
-                        <i class="fa-solid fa-arrow-left"></i>
-                    </button>
-                    <div class="breadcrumbs">Notlar / Çalışmalarım</div>
-                    <h1 class="header-title">Çalışmalarım <i class="fa-solid fa-chevron-down"
-                            style="font-size: 1rem; margin-left: 0.5rem; opacity: 0.5;"></i></h1>
-                </div>
-
-                <div class="search-bar">
-                    <i class="fa-solid fa-magnifying-glass"></i>
-                    <input type="text" id="search-input" placeholder="Notlarda ara...">
-                </div>
-
-                <div class="header-right">
-                    <div class="user-avatars" style="display: flex;">
-                        <div class="avatar-sm" style="background:#ef4444;">A</div>
-                        <div class="avatar-sm" style="background:#10b981; margin-left: -8px;">B</div>
-                        <div class="avatar-sm" style="background:#3b82f6; margin-left: -8px;">C</div>
-                        <div class="avatar-sm-more" style="margin-left: -8px;">+8</div>
-                    </div>
-                </div>
-            </header>
-
-            <div class="filter-bar"
-                style="padding: 1rem 2rem; display: flex; gap: 1rem; align-items: center; position: relative;">
-                <div class="pill-tabs">
-                    <button class="pill active" onclick="window.setQuickFilter('all', this)">Hepsi</button>
-                    <button class="pill" onclick="window.setQuickFilter('kisisel', this)">Kişisel</button>
-                    <button class="pill" onclick="window.setQuickFilter('diger', this)">Diğerleri</button>
-                </div>
-                <div style="margin-left: auto; display: flex; gap: 0.5rem;">
-                    <button id="btn-view-toggle" class="icon-btn-outline" onclick="window.toggleViewMode(this)">
-                        <i class="fa-solid fa-border-all"></i> Pano
-                    </button>
-
-                    <div style="position: relative;">
-                        <button id="btn-sort" class="icon-btn-outline"
-                            onclick="document.getElementById('sort-dropdown').classList.toggle('show')">
-                            <i class="fa-solid fa-arrow-down-wide-short"></i> Sırala
-                        </button>
-                        <div id="sort-dropdown" class="sort-menu">
-                            <div class="sort-option active"
-                                onclick="window.setSort('date-desc'); document.getElementById('sort-dropdown').classList.remove('show')">
-                                Tarih (Yeni)</div>
-                            <div class="sort-option"
-                                onclick="window.setSort('date-asc'); document.getElementById('sort-dropdown').classList.remove('show')">
-                                Tarih (Eski)</div>
-                            <div class="sort-option"
-                                onclick="window.setSort('az'); document.getElementById('sort-dropdown').classList.remove('show')">
-                                İsim (A-Z)</div>
-                            <div class="sort-option"
-                                onclick="window.setSort('za'); document.getElementById('sort-dropdown').classList.remove('show')">
-                                İsim (Z-A)</div>
-                        </div>
-                    </div>
-
-                    <button id="btn-filter" class="icon-btn-outline" onclick="window.filterByFavorites()"><i
-                            class="fa-solid fa-filter"></i>
-                        Filtrele</button>
-                </div>
-            </div>
-
-            <div class="content-area" id="notes-container">
-                <!-- Notlar JavaScript ile buraya eklenecek -->
-                <div class="empty-state">
-                    <img src="https://cdni.iconscout.com/illustration/premium/thumb/empty-state-2130362-1800926.png"
-                        alt="Not yok" style="max-width: 200px; opacity: 0.7;">
-                    <h2>Henüz hiç notun yok</h2>
-                    <p>Hemen yeni bir tane oluştur!</p>
-                </div>
-            </div>
-        </main>
+</html>
+<!-- Sidebar -->
+<aside class="sidebar">
+    <div class="logo-area">
+        <i class="fa-solid fa-moon"></i>
+        <span>Not Defterim</span>
     </div>
 
-    <!-- Modals -->
-    <!-- Removed wrapper, direct modal usage -->
-    <div id="note-modal" class="modal-overlay" style="display:none;">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2 id="modal-title">Yeni Not Oluştur</h2>
-                <button class="close-modal"><i class="fa-solid fa-xmark"></i></button>
+    <!-- User Profile Section - Updated -->
+    <div class="user-profile" id="user-profile-btn" style="cursor:pointer;">
+        <div class="user-avatar" style="background: var(--primary-color);">RA</div>
+        <div class="user-info">
+            <div class="user-name" style="text-transform: uppercase;">Recep Ataç</div>
+            <div class="user-role" style="text-transform: uppercase;">Ürün Sahibi</div>
+        </div>
+        <i class="fa-solid fa-chevron-down" style="font-size: 0.75rem; margin-left: auto; opacity: 0.5;"></i>
+    </div>
+
+    <!-- Summary Cards (Functional Influence) -->
+    <div class="summary-cards" style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem;">
+        <div class="summary-card" onclick="window.filterByCategory('all', null)"
+            style="background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.2); padding: 0.75rem; border-radius: 12px; cursor: pointer;">
+            <div style="font-size: 0.7rem; color: #3b82f6; font-weight: 600;">Toplam</div>
+            <div id="count-total" style="font-size: 1.25rem; font-weight: 700; color: #3b82f6;">0</div>
+        </div>
+        <div class="summary-card" onclick="window.filterByFavorites()"
+            style="background: rgba(249, 115, 22, 0.1); border: 1px solid rgba(249, 115, 22, 0.2); padding: 0.75rem; border-radius: 12px; cursor: pointer;">
+            <div style="font-size: 0.7rem; color: var(--primary-color); font-weight: 600;">Favoriler</div>
+            <div id="count-favorites" style="font-size: 1.25rem; font-weight: 700; color: var(--primary-color);">0</div>
+        </div>
+    </div>
+
+    <button class="btn-primary-large" id="btn-new-note" style="margin-top: 0.5rem;" onclick="window.openModal()">
+        <i class="fa-solid fa-plus"></i> Yeni Not
+    </button>
+
+    <div class="nav-section-label"
+        style="font-size: 0.7rem; text-transform: uppercase; color: var(--text-muted); letter-spacing: 0.05em; margin-top: 1rem;">
+        Menü</div>
+    <nav class="main-nav">
+        <ul>
+            <li class="active" onclick="window.filterByCategory('all', event)" style="cursor: pointer;"><i
+                    class="fa-solid fa-layer-group"></i> Tüm Notlar</li>
+            <li onclick="window.filterByFavorites()" style="cursor: pointer;"><i class="fa-solid fa-star"></i>
+                Favoriler</li>
+        </ul>
+    </nav>
+
+    <div class="nav-section-label"
+        style="font-size: 0.7rem; text-transform: uppercase; color: var(--text-muted); letter-spacing: 0.05em; margin-top: 0.5rem;">
+        Kategoriler</div>
+    <div class="category-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem;">
+        <div class="cat-item" data-category="genel" onclick="window.filterByCategory('genel', event)">
+            <i class="fa-solid fa-note-sticky" style="color: #64748b;"></i>
+            <span>Genel</span>
+        </div>
+        <div class="cat-item" data-category="is" onclick="window.filterByCategory('is', event)">
+            <i class="fa-solid fa-briefcase" style="color: #a855f7;"></i>
+            <span>İş</span>
+        </div>
+        <div class="cat-item" data-category="gorev" onclick="window.filterByCategory('gorev', event)">
+            <i class="fa-solid fa-check-double" style="color: #10b981;"></i>
+            <span>Görev</span>
+        </div>
+        <div class="cat-item" data-category="fikir" onclick="window.filterByCategory('fikir', event)">
+            <i class="fa-solid fa-lightbulb" style="color: #f59e0b;"></i>
+            <span>Fikir</span>
+        </div>
+        <div class="cat-item" data-category="toplanti" onclick="window.filterByCategory('toplanti', event)">
+            <i class="fa-solid fa-users" style="color: #3b82f6;"></i>
+            <span>Toplantı</span>
+        </div>
+        <div class="cat-item" data-category="karar" onclick="window.filterByCategory('karar', event)">
+            <i class="fa-solid fa-bullseye" style="color: #ef4444;"></i>
+            <span>Karar</span>
+        </div>
+        <div class="cat-item" data-category="egitim" onclick="window.filterByCategory('egitim', event)">
+            <i class="fa-solid fa-graduation-cap" style="color: #4f46e5;"></i>
+            <span>Eğitim</span>
+        </div>
+        <div class="cat-item" data-category="finans" onclick="window.filterByCategory('finans', event)">
+            <i class="fa-solid fa-coins" style="color: #059669;"></i>
+            <span>Finans</span>
+        </div>
+    </div>
+
+    <!-- Education Sub Menu (Hidden by default) -->
+    <div id="education-sub-menu" class="sub-menu" style="display: none;">
+        <!-- Dynamic Content -->
+    </div>
+
+    <div class="ai-section">
+        <h3><i class="fa-solid fa-wand-magic-sparkles"></i> AI Analiz</h3>
+        <div class="ai-card" id="ai-quick-view">
+            <!-- AI Hızlı Görüş İçeriği Buraya -->
+            <div class="ai-placeholder">
+                <i class="fa-solid fa-robot"></i>
+                <p>Son notlarınız inceleniyor...</p>
             </div>
-            <div class="modal-body">
-                <!-- Top Section: Category & Title -->
-                <div class="category-selector" style="margin-bottom: 0.75rem;">
-                    <label
-                        style="font-size: 0.75rem; color: var(--text-muted); display: block; margin-bottom: 0.25rem;">Kategori
-                        Seç</label>
-                    <select id="note-category-select"
-                        style="width: 100%; background: #27272a; border: 1px solid var(--border-color); color: white; padding: 0.75rem; border-radius: 12px; font-family: inherit; font-size: 0.9rem; margin-top: 0.25rem;">
-                        <option value="genel" style="background: #27272a; color: white;">Genel</option>
-                        <option value="is" style="background: #27272a; color: white;">İş</option>
-                        <option value="gorev" style="background: #27272a; color: white;">Görev</option>
-                        <option value="fikir" style="background: #27272a; color: white;">Fikir</option>
-                        <option value="toplanti" style="background: #27272a; color: white;">Toplantı</option>
-                        <option value="karar" style="background: #27272a; color: white;">Karar</option>
-                        <option value="egitim" style="background: #27272a; color: white;">Eğitim</option>
-                        <option value="finans" style="background: #27272a; color: white;">Finans</option>
-                    </select>
-                    <!-- Sub Category Input (Hidden by default) -->
-                    <input type="text" id="note-subcategory-input" placeholder="Alt Başlık / Grup Adı (Örn: Efeler 25)"
-                        style="display: none; width: 100%; padding: 0.75rem; background: #27272a; border: 1px solid rgba(255,255,255,0.1); color: white; border-radius: 8px; margin-top: 1rem;"
-                        list="group-suggestions">
-                    <datalist id="group-suggestions"></datalist>
-                </div>
+        </div>
+        <button id="btn-deep-analysis" class="btn-secondary"
+            style="background: rgba(168, 85, 247, 0.2); border-color: rgba(168, 85, 247, 0.3); color: #c084fc;">
+            <i class="fa-solid fa-brain"></i> Derin Analiz
+        </button>
+    </div>
 
-                <input type="text" id="note-title-input" placeholder="Başlık (İsteğe bağlı)" class="modal-input-title"
-                    style="margin-bottom: 1rem;">
+    <div class="storage-info">
+        <i class="fa-solid fa-database"></i>
+        <span id="storage-status">Yerel Kayıt Aktif</span>
+    </div>
+</aside>
 
-                <!-- Unified Toolbar -->
-                <div class="editor-toolbar"
-                    style="display: flex; align-items: center; gap: 1rem; padding: 0.75rem; background: rgba(255,255,255,0.03); border-radius: 12px; border: 1px solid var(--border-color); margin-bottom: 1rem; flex-wrap: wrap;">
-
-                    <!-- Color Palette -->
-                    <div class="color-palette"
-                        style="display:flex; gap:0.5rem; border-right: 1px solid rgba(255,255,255,0.1); padding-right: 1rem;">
-                        <div class="palette-color active"
-                            style="background:#ffffff; width:24px; height:24px; border-radius:50%; cursor:pointer; border: 2px solid #e2e8f0;"
-                            data-color="#ffffff" title="Beyaz"></div>
-                        <div class="palette-color"
-                            style="background:#000000; width:24px; height:24px; border-radius:50%; cursor:pointer; border: 1px solid rgba(255,255,255,0.2);"
-                            data-color="#000000" title="Siyah"></div>
-                        <div class="palette-color"
-                            style="background:#ef4444; width:24px; height:24px; border-radius:50%; cursor:pointer;"
-                            data-color="#ef4444"></div>
-                        <div class="palette-color"
-                            style="background:#f59e0b; width:24px; height:24px; border-radius:50%; cursor:pointer;"
-                            data-color="#f59e0b"></div>
-                        <div class="palette-color"
-                            style="background:#10b981; width:24px; height:24px; border-radius:50%; cursor:pointer;"
-                            data-color="#10b981"></div>
-                        <div class="palette-color"
-                            style="background:#3b82f6; width:24px; height:24px; border-radius:50%; cursor:pointer;"
-                            data-color="#3b82f6"></div>
-                    </div>
-
-                    <!-- Tools -->
-                    <div style="position:relative;">
-                        <button id="btn-shapes" class="icon-btn" title="Şekil Ekle" onclick="toggleShapeMenu()"
-                            style="font-size: 1.1rem;"><i class="fa-solid fa-shapes"></i></button>
-                        <div id="shape-menu" class="shape-dropdown" style="display:none;">
-                            <button onclick="insertShape('square')" title="Kare"><i
-                                    class="fa-regular fa-square"></i></button>
-                            <button onclick="insertShape('rectangle')" title="Dikdörtgen"><i
-                                    class="fa-regular fa-square" style="transform: scaleX(1.5);"></i></button>
-                            <button onclick="insertShape('circle')" title="Daire"><i
-                                    class="fa-regular fa-circle"></i></button>
-                            <button onclick="insertShape('ellipse')" title="Elips"><i
-                                    class="fa-solid fa-egg"></i></button>
-                            <button onclick="insertShape('arrow-up')" title="Yukarı Ok"><i
-                                    class="fa-solid fa-arrow-up"></i></button>
-                            <button onclick="insertShape('arrow-down')" title="Aşağı Ok"><i
-                                    class="fa-solid fa-arrow-down"></i></button>
-                            <button onclick="insertShape('arrow-left')" title="Sola Ok"><i
-                                    class="fa-solid fa-arrow-left"></i></button>
-                            <button onclick="insertShape('arrow-right')" title="Sağa Ok"><i
-                                    class="fa-solid fa-arrow-right"></i></button>
-                            <button onclick="insertShape('star')" title="Yıldız"><i
-                                    class="fa-regular fa-star"></i></button>
-                            <button onclick="insertShape('heart')" title="Kalp"><i
-                                    class="fa-regular fa-heart"></i></button>
-                        </div>
-                    </div>
-
-                    <button id="btn-text-tool" class="icon-btn" title="Metin Ekle" style="font-size: 1.1rem;"><i
-                            class="fa-solid fa-font"></i></button>
-                    <button id="btn-eraser" class="icon-btn" title="Silgi" style="font-size: 1.1rem;"><i
-                            class="fa-solid fa-eraser"></i></button>
-
-                    <div class="separator" style="width:1px; height:24px; background:rgba(255,255,255,0.1);"></div>
-
-                    <button class="icon-btn" title="Dosya Ekle" onclick="document.getElementById('file-upload').click()"
-                        style="font-size: 1.1rem;"><i class="fa-solid fa-paperclip"></i></button>
-                    <button class="icon-btn" id="btn-camera" title="Fotoğraf Çek" style="font-size: 1.1rem;"><i
-                            class="fa-solid fa-camera"></i></button>
-
-                    <!-- Hidden Inputs from old logic - CLEARED -->
-                    <input type="color" id="drawing-color" value="#000000"
-                        style="visibility:hidden; width:0; height:0;">
-                    <input type="range" id="drawing-size" min="1" max="20" value="3"
-                        style="visibility:hidden; width:0; height:0;">
-                </div>
-
-                <!-- Unified Editor Area (White Page) -->
-                <!-- Unified Editor Area (White Page) -->
-                <div id="text-editor" class="editor-area" style="display:block; height:100%;">
-                    <div id="note-content-wrapper"
-                        style="width:100%; height:100%; border-radius: 8px; padding: 1rem; background: transparent; transition: background 0.3s;">
-                        <textarea id="note-content" placeholder="Notunuzu buraya yazın..."
-                            style="width: 100%; height: 100%; min-height: 300px; border: none; outline: none; resize: none; background: transparent; color: inherit; line-height: 1.6; font-size:1rem;"></textarea>
-                    </div>
-                </div>
-
-                <div id="editor-area-drawing" class="editor-area hidden"
-                    style="display:none; flex-direction:column; height:100%; position: relative;">
-                    <div class="drawing-text-section" style="margin-bottom: 0.5rem;">
-                        <textarea id="drawing-description" class="drawing-text-input" placeholder="Notlarınız..."
-                            style="min-height: 60px; display:none;"></textarea><!-- Hidden, using canvas tools mostly or we can keep it for simple text? User said Metin Tuşu adds text -->
-                    </div>
-
-                    <div style="position:relative; width:100%; flex:1; overflow-y:auto; overflow-x:hidden; background: white; border-radius: 8px;"
-                        id="canvas-wrapper">
-
-                        <canvas id="drawing-canvas"></canvas>
-                    </div>
-                </div>
-                <div class="drawing-text-section" style="flex:1; display:flex; flex-direction:column; gap:0.5rem;">
-                    <div class="text-tools" style="display:flex; justify-content:space-between; align-items:center;">
-                        <label style="font-size:0.8rem; color:var(--text-muted);">Not Rengi:</label>
-                        <input type="color" id="drawing-text-color" value="#f8fafc">
-                    </div>
-                    <textarea id="drawing-description" placeholder="Çizim hakkında not ekle..."
-                        class="drawing-text-input" style="flex:1; height:100px;"></textarea>
-
-                    <div id="drawing-attachments-list"
-                        style="margin-top:0.5rem; display:flex; flex-direction:column; gap:0.5rem; max-height: 150px; overflow-y: auto;">
-                        <!-- Drawing attachments will appear here -->
-                    </div>
-                </div>
-            </div>
-
-            <div id="editor-area-image" class="editor-area hidden" style="text-align:center;">
-                <!-- Image previews will be moved here -->
-            </div>
-
-            <div id="editor-area-checklist" class="editor-area hidden">
-                <div class="checklist-input-group">
-                    <input type="text" id="checklist-input" placeholder="Yeni maddle ekle...">
-                    <button id="btn-add-item"><i class="fa-solid fa-plus"></i></button>
-                </div>
-                <ul id="checklist-items">
-                    <!-- Items will be added here -->
-                </ul>
-            </div>
-
-            <!-- Diğer tipler için alanlar eklenebilir -->
-
-            <!-- Attachment Preview -->
-            <div id="attachment-preview-container" class="hidden"
-                style="margin-top:1rem; padding:0.75rem; background:rgba(255,255,255,0.05); border-radius:8px; border: 1px solid var(--border-color);">
-                <div style="font-size:0.75rem; color:var(--text-muted); margin-bottom:0.5rem;">Ekli Dosya:</div>
-                <div id="attachment-item" style="display:flex; align-items:center; gap:0.75rem; cursor:pointer;"
-                    title="Ek Önizlemesi">
-                    <i class="fa-solid fa-paperclip" style="color:var(--primary-color);"></i>
-                    <span id="attachment-name" style="font-size:0.85rem; word-break:break-all;">dosya.pdf</span>
-                    <button class="icon-btn" id="btn-remove-attachment" style="margin-left:auto; color: #ef4444;"
-                        title="Eki Kaldır"><i class="fa-solid fa-trash-can"></i></button>
-                </div>
-            </div>
-        </div> <!-- Close modal-body -->
-
-        <div class="modal-actions">
-            <div class="attachment-actions">
-                <button class="icon-btn" title="Dosya Yükle" onclick="document.getElementById('file-upload').click()"><i
-                        class="fa-solid fa-paperclip"></i></button>
-                <input type="file" id="file-upload" hidden multiple>
-                <button class="icon-btn" title="Kamera" id="btn-camera"><i class="fa-solid fa-camera"></i></button>
-            </div>
-            <button id="btn-save-note" class="btn-primary-large"
-                style="width:100%; justify-content:center; margin-top:1rem; background: var(--primary-color);">
-                <i class="fa-solid fa-floppy-disk"></i> Kaydet
+<!-- Main Content (Hidden on Mobile Initially) -->
+<main class="main-content">
+    <header class="top-bar">
+        <div class="header-left">
+            <button id="mobile-back-btn" class="icon-btn-outline" style="display: none; margin-right: 0.5rem;"
+                onclick="window.showMobileMenu()">
+                <i class="fa-solid fa-arrow-left"></i>
             </button>
-        </div> <!-- Close modal-actions -->
-    </div> <!-- Close note-modal -->
+            <div class="breadcrumbs">Notlar / Çalışmalarım</div>
+            <h1 class="header-title">Çalışmalarım <i class="fa-solid fa-chevron-down"
+                    style="font-size: 1rem; margin-left: 0.5rem; opacity: 0.5;"></i></h1>
+        </div>
 
-    <!-- Profile & Settings Modal -->
-    <div id="profile-modal" class="modal hidden" style="width: 500px; height: auto; max-height: 90vh;">
+        <div class="search-bar">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input type="text" id="search-input" placeholder="Notlarda ara...">
+        </div>
+
+        <div class="header-right">
+            <div class="user-avatars" style="display: flex;">
+                <div class="avatar-sm" style="background:#ef4444;">A</div>
+                <div class="avatar-sm" style="background:#10b981; margin-left: -8px;">B</div>
+                <div class="avatar-sm" style="background:#3b82f6; margin-left: -8px;">C</div>
+                <div class="avatar-sm-more" style="margin-left: -8px;">+8</div>
+            </div>
+        </div>
+    </header>
+
+    <div class="filter-bar"
+        style="padding: 1rem 2rem; display: flex; gap: 1rem; align-items: center; position: relative;">
+        <div class="pill-tabs">
+            <button class="pill active" onclick="window.setQuickFilter('all', this)">Hepsi</button>
+            <button class="pill" onclick="window.setQuickFilter('kisisel', this)">Kişisel</button>
+            <button class="pill" onclick="window.setQuickFilter('diger', this)">Diğerleri</button>
+        </div>
+        <div style="margin-left: auto; display: flex; gap: 0.5rem;">
+            <button id="btn-view-toggle" class="icon-btn-outline" onclick="window.toggleViewMode(this)">
+                <i class="fa-solid fa-border-all"></i> Pano
+            </button>
+
+            <div style="position: relative;">
+                <button id="btn-sort" class="icon-btn-outline"
+                    onclick="document.getElementById('sort-dropdown').classList.toggle('show')">
+                    <i class="fa-solid fa-arrow-down-wide-short"></i> Sırala
+                </button>
+                <div id="sort-dropdown" class="sort-menu">
+                    <div class="sort-option active"
+                        onclick="window.setSort('date-desc'); document.getElementById('sort-dropdown').classList.remove('show')">
+                        Tarih (Yeni)</div>
+                    <div class="sort-option"
+                        onclick="window.setSort('date-asc'); document.getElementById('sort-dropdown').classList.remove('show')">
+                        Tarih (Eski)</div>
+                    <div class="sort-option"
+                        onclick="window.setSort('az'); document.getElementById('sort-dropdown').classList.remove('show')">
+                        İsim (A-Z)</div>
+                    <div class="sort-option"
+                        onclick="window.setSort('za'); document.getElementById('sort-dropdown').classList.remove('show')">
+                        İsim (Z-A)</div>
+                </div>
+            </div>
+
+            <button id="btn-filter" class="icon-btn-outline" onclick="window.filterByFavorites()"><i
+                    class="fa-solid fa-filter"></i>
+                Filtrele</button>
+        </div>
+    </div>
+
+    <div class="content-area" id="notes-container">
+        <!-- Notlar JavaScript ile buraya eklenecek -->
+        <div class="empty-state">
+            <img src="https://cdni.iconscout.com/illustration/premium/thumb/empty-state-2130362-1800926.png"
+                alt="Not yok" style="max-width: 200px; opacity: 0.7;">
+            <h2>Henüz hiç notun yok</h2>
+            <p>Hemen yeni bir tane oluştur!</p>
+        </div>
+    </div>
+</main>
+</div>
+
+<!-- Modals -->
+<!-- Removed wrapper, direct modal usage -->
+<div id="note-modal" class="modal-overlay" style="display:none;">
+    <div class="modal-content">
         <div class="modal-header">
-            <h2>Profil ve Ayarlar</h2>
-            <button class="close-modal" id="btn-close-profile"><i class="fa-solid fa-xmark"></i></button>
+            <h2 id="modal-title">Yeni Not Oluştur</h2>
+            <button class="close-modal"><i class="fa-solid fa-xmark"></i></button>
         </div>
         <div class="modal-body">
-            <div class="profile-details-area" style="text-align: center; padding: 1rem 0;">
-                <div class="user-avatar"
-                    style="width: 80px; height: 80px; font-size: 2rem; margin: 0 auto 1.5rem; background: var(--primary-color);">
-                    RA</div>
-                <h3 style="font-size: 1.5rem; margin-bottom: 0.25rem;">RECEP ATAÇ</h3>
-                <p
-                    style="color: var(--text-muted); font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.1em;">
-                    Ürün Sahibi</p>
+            <!-- Top Section: Category & Title -->
+            <div class="category-selector" style="margin-bottom: 0.75rem;">
+                <label
+                    style="font-size: 0.75rem; color: var(--text-muted); display: block; margin-bottom: 0.25rem;">Kategori
+                    Seç</label>
+                <select id="note-category-select"
+                    style="width: 100%; background: #27272a; border: 1px solid var(--border-color); color: white; padding: 0.75rem; border-radius: 12px; font-family: inherit; font-size: 0.9rem; margin-top: 0.25rem;">
+                    <option value="genel" style="background: #27272a; color: white;">Genel</option>
+                    <option value="is" style="background: #27272a; color: white;">İş</option>
+                    <option value="gorev" style="background: #27272a; color: white;">Görev</option>
+                    <option value="fikir" style="background: #27272a; color: white;">Fikir</option>
+                    <option value="toplanti" style="background: #27272a; color: white;">Toplantı</option>
+                    <option value="karar" style="background: #27272a; color: white;">Karar</option>
+                    <option value="egitim" style="background: #27272a; color: white;">Eğitim</option>
+                    <option value="finans" style="background: #27272a; color: white;">Finans</option>
+                </select>
+                <!-- Sub Category Input (Hidden by default) -->
+                <input type="text" id="note-subcategory-input" placeholder="Alt Başlık / Grup Adı (Örn: Efeler 25)"
+                    style="display: none; width: 100%; padding: 0.75rem; background: #27272a; border: 1px solid rgba(255,255,255,0.1); color: white; border-radius: 8px; margin-top: 1rem;"
+                    list="group-suggestions">
+                <datalist id="group-suggestions"></datalist>
             </div>
 
-            <div class="settings-list" style="display: flex; flex-direction: column; gap: 1rem; margin-top: 1.5rem;">
-                <div class="setting-item"
-                    style="display: flex; justify-content: space-between; align-items: center; padding: 1rem; background: rgba(255,255,255,0.02); border-radius: 12px; border: 1px solid var(--border-color);">
-                    <div style="display: flex; align-items: center; gap: 1rem;">
-                        <i class="fa-solid fa-globe" style="color: var(--accent-color);"></i>
-                        <span>Dil</span>
-                    </div>
-                    <span style="color: var(--text-muted); font-size: 0.9rem;">Türkçe</span>
+            <input type="text" id="note-title-input" placeholder="Başlık (İsteğe bağlı)" class="modal-input-title"
+                style="margin-bottom: 1rem;">
+
+            <!-- Unified Toolbar -->
+            <div class="editor-toolbar"
+                style="display: flex; align-items: center; gap: 1rem; padding: 0.75rem; background: rgba(255,255,255,0.03); border-radius: 12px; border: 1px solid var(--border-color); margin-bottom: 1rem; flex-wrap: wrap;">
+
+                <!-- Color Palette -->
+                <div class="color-palette"
+                    style="display:flex; gap:0.5rem; border-right: 1px solid rgba(255,255,255,0.1); padding-right: 1rem;">
+                    <div class="palette-color active"
+                        style="background:#ffffff; width:24px; height:24px; border-radius:50%; cursor:pointer; border: 2px solid #e2e8f0;"
+                        data-color="#ffffff" title="Beyaz"></div>
+                    <div class="palette-color"
+                        style="background:#000000; width:24px; height:24px; border-radius:50%; cursor:pointer; border: 1px solid rgba(255,255,255,0.2);"
+                        data-color="#000000" title="Siyah"></div>
+                    <div class="palette-color"
+                        style="background:#ef4444; width:24px; height:24px; border-radius:50%; cursor:pointer;"
+                        data-color="#ef4444"></div>
+                    <div class="palette-color"
+                        style="background:#f59e0b; width:24px; height:24px; border-radius:50%; cursor:pointer;"
+                        data-color="#f59e0b"></div>
+                    <div class="palette-color"
+                        style="background:#10b981; width:24px; height:24px; border-radius:50%; cursor:pointer;"
+                        data-color="#10b981"></div>
+                    <div class="palette-color"
+                        style="background:#3b82f6; width:24px; height:24px; border-radius:50%; cursor:pointer;"
+                        data-color="#3b82f6"></div>
                 </div>
 
-                <div class="setting-item"
-                    style="display: flex; justify-content: space-between; align-items: center; padding: 1rem; background: rgba(255,255,255,0.02); border-radius: 12px; border: 1px solid var(--border-color);">
-                    <div style="display: flex; align-items: center; gap: 1rem;">
-                        <i class="fa-solid fa-moon" style="color: var(--secondary-color);"></i>
-                        <span>Tema</span>
+                <!-- Tools -->
+                <div style="position:relative;">
+                    <button id="btn-shapes" class="icon-btn" title="Şekil Ekle" onclick="toggleShapeMenu()"
+                        style="font-size: 1.1rem;"><i class="fa-solid fa-shapes"></i></button>
+                    <div id="shape-menu" class="shape-dropdown" style="display:none;">
+                        <button onclick="insertShape('square')" title="Kare"><i
+                                class="fa-regular fa-square"></i></button>
+                        <button onclick="insertShape('rectangle')" title="Dikdörtgen"><i class="fa-regular fa-square"
+                                style="transform: scaleX(1.5);"></i></button>
+                        <button onclick="insertShape('circle')" title="Daire"><i
+                                class="fa-regular fa-circle"></i></button>
+                        <button onclick="insertShape('ellipse')" title="Elips"><i class="fa-solid fa-egg"></i></button>
+                        <button onclick="insertShape('arrow-up')" title="Yukarı Ok"><i
+                                class="fa-solid fa-arrow-up"></i></button>
+                        <button onclick="insertShape('arrow-down')" title="Aşağı Ok"><i
+                                class="fa-solid fa-arrow-down"></i></button>
+                        <button onclick="insertShape('arrow-left')" title="Sola Ok"><i
+                                class="fa-solid fa-arrow-left"></i></button>
+                        <button onclick="insertShape('arrow-right')" title="Sağa Ok"><i
+                                class="fa-solid fa-arrow-right"></i></button>
+                        <button onclick="insertShape('star')" title="Yıldız"><i class="fa-regular fa-star"></i></button>
+                        <button onclick="insertShape('heart')" title="Kalp"><i class="fa-regular fa-heart"></i></button>
                     </div>
-                    <span style="color: var(--text-muted); font-size: 0.9rem;">Koyu</span>
                 </div>
 
-                <div class="setting-item"
-                    style="display: flex; justify-content: space-between; align-items: center; padding: 1rem; background: rgba(255,255,255,0.02); border-radius: 12px; border: 1px solid var(--border-color);">
-                    <div style="display: flex; align-items: center; gap: 1rem;">
-                        <i class="fa-solid fa-shield-halved" style="color: var(--primary-color);"></i>
-                        <span>Güvenlik</span>
-                    </div>
-                    <i class="fa-solid fa-chevron-right" style="font-size: 0.8rem; opacity: 0.5;"></i>
+                <button id="btn-text-tool" class="icon-btn" title="Metin Ekle" style="font-size: 1.1rem;"><i
+                        class="fa-solid fa-font"></i></button>
+                <button id="btn-eraser" class="icon-btn" title="Silgi" style="font-size: 1.1rem;"><i
+                        class="fa-solid fa-eraser"></i></button>
+
+                <div class="separator" style="width:1px; height:24px; background:rgba(255,255,255,0.1);"></div>
+
+                <button class="icon-btn" title="Dosya Ekle" onclick="document.getElementById('file-upload').click()"
+                    style="font-size: 1.1rem;"><i class="fa-solid fa-paperclip"></i></button>
+                <button class="icon-btn" id="btn-camera" title="Fotoğraf Çek" style="font-size: 1.1rem;"><i
+                        class="fa-solid fa-camera"></i></button>
+
+                <!-- Hidden Inputs from old logic - CLEARED -->
+                <input type="color" id="drawing-color" value="#000000" style="visibility:hidden; width:0; height:0;">
+                <input type="range" id="drawing-size" min="1" max="20" value="3"
+                    style="visibility:hidden; width:0; height:0;">
+            </div>
+
+            <!-- Unified Editor Area (White Page) -->
+            <!-- Unified Editor Area (White Page) -->
+            <div id="text-editor" class="editor-area" style="display:block; height:100%;">
+                <div id="note-content-wrapper"
+                    style="width:100%; height:100%; border-radius: 8px; padding: 1rem; background: transparent; transition: background 0.3s;">
+                    <textarea id="note-content" placeholder="Notunuzu buraya yazın..."
+                        style="width: 100%; height: 100%; min-height: 300px; border: none; outline: none; resize: none; background: transparent; color: inherit; line-height: 1.6; font-size:1rem;"></textarea>
                 </div>
             </div>
 
-            <div style="margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid var(--border-color);">
-                <button class="btn-secondary"
-                    style="width: 100%; padding: 1rem; border-color: #ef4444; color: #ef4444;">
-                    <i class="fa-solid fa-right-from-bracket"></i> Çıkış Yap
-                </button>
+            <div id="editor-area-drawing" class="editor-area hidden"
+                style="display:none; flex-direction:column; height:100%; position: relative;">
+                <div class="drawing-text-section" style="margin-bottom: 0.5rem;">
+                    <textarea id="drawing-description" class="drawing-text-input" placeholder="Notlarınız..."
+                        style="min-height: 60px; display:none;"></textarea><!-- Hidden, using canvas tools mostly or we can keep it for simple text? User said Metin Tuşu adds text -->
+                </div>
+
+                <div style="position:relative; width:100%; flex:1; overflow-y:auto; overflow-x:hidden; background: white; border-radius: 8px;"
+                    id="canvas-wrapper">
+
+                    <canvas id="drawing-canvas"></canvas>
+                </div>
             </div>
-        </div> <!-- End modal-body -->
-    </div> <!-- End modal-content -->
-    </div> <!-- End note-modal overlay -->
+            <div class="drawing-text-section" style="flex:1; display:flex; flex-direction:column; gap:0.5rem;">
+                <div class="text-tools" style="display:flex; justify-content:space-between; align-items:center;">
+                    <label style="font-size:0.8rem; color:var(--text-muted);">Not Rengi:</label>
+                    <input type="color" id="drawing-text-color" value="#f8fafc">
+                </div>
+                <textarea id="drawing-description" placeholder="Çizim hakkında not ekle..." class="drawing-text-input"
+                    style="flex:1; height:100px;"></textarea>
+
+                <div id="drawing-attachments-list"
+                    style="margin-top:0.5rem; display:flex; flex-direction:column; gap:0.5rem; max-height: 150px; overflow-y: auto;">
+                    <!-- Drawing attachments will appear here -->
+                </div>
+            </div>
+        </div>
+
+        <div id="editor-area-image" class="editor-area hidden" style="text-align:center;">
+            <!-- Image previews will be moved here -->
+        </div>
+
+        <div id="editor-area-checklist" class="editor-area hidden">
+            <div class="checklist-input-group">
+                <input type="text" id="checklist-input" placeholder="Yeni maddle ekle...">
+                <button id="btn-add-item"><i class="fa-solid fa-plus"></i></button>
+            </div>
+            <ul id="checklist-items">
+                <!-- Items will be added here -->
+            </ul>
+        </div>
+
+        <!-- Diğer tipler için alanlar eklenebilir -->
+
+        <!-- Attachment Preview -->
+        <div id="attachment-preview-container" class="hidden"
+            style="margin-top:1rem; padding:0.75rem; background:rgba(255,255,255,0.05); border-radius:8px; border: 1px solid var(--border-color);">
+            <div style="font-size:0.75rem; color:var(--text-muted); margin-bottom:0.5rem;">Ekli Dosya:</div>
+            <div id="attachment-item" style="display:flex; align-items:center; gap:0.75rem; cursor:pointer;"
+                title="Ek Önizlemesi">
+                <i class="fa-solid fa-paperclip" style="color:var(--primary-color);"></i>
+                <span id="attachment-name" style="font-size:0.85rem; word-break:break-all;">dosya.pdf</span>
+                <button class="icon-btn" id="btn-remove-attachment" style="margin-left:auto; color: #ef4444;"
+                    title="Eki Kaldır"><i class="fa-solid fa-trash-can"></i></button>
+            </div>
+        </div>
+    </div> <!-- Close modal-body -->
+
+    <div class="modal-actions">
+        <div class="attachment-actions">
+            <button class="icon-btn" title="Dosya Yükle" onclick="document.getElementById('file-upload').click()"><i
+                    class="fa-solid fa-paperclip"></i></button>
+            <input type="file" id="file-upload" hidden multiple>
+            <button class="icon-btn" title="Kamera" id="btn-camera"><i class="fa-solid fa-camera"></i></button>
+        </div>
+        <button id="btn-save-note" class="btn-primary-large"
+            style="width:100%; justify-content:center; margin-top:1rem; background: var(--primary-color);">
+            <i class="fa-solid fa-floppy-disk"></i> Kaydet
+        </button>
+    </div> <!-- Close modal-actions -->
+</div> <!-- Close note-modal -->
+
+<!-- Profile & Settings Modal -->
+<div id="profile-modal" class="modal hidden" style="width: 500px; height: auto; max-height: 90vh;">
+    <div class="modal-header">
+        <h2>Profil ve Ayarlar</h2>
+        <button class="close-modal" id="btn-close-profile"><i class="fa-solid fa-xmark"></i></button>
     </div>
+    <div class="modal-body">
+        <div class="profile-details-area" style="text-align: center; padding: 1rem 0;">
+            <div class="user-avatar"
+                style="width: 80px; height: 80px; font-size: 2rem; margin: 0 auto 1.5rem; background: var(--primary-color);">
+                RA</div>
+            <h3 style="font-size: 1.5rem; margin-bottom: 0.25rem;">RECEP ATAÇ</h3>
+            <p style="color: var(--text-muted); font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.1em;">
+                Ürün Sahibi</p>
+        </div>
 
-    <script type="module" src="script.js?v=24"></script>
+        <div class="settings-list" style="display: flex; flex-direction: column; gap: 1rem; margin-top: 1.5rem;">
+            <div class="setting-item"
+                style="display: flex; justify-content: space-between; align-items: center; padding: 1rem; background: rgba(255,255,255,0.02); border-radius: 12px; border: 1px solid var(--border-color);">
+                <div style="display: flex; align-items: center; gap: 1rem;">
+                    <i class="fa-solid fa-globe" style="color: var(--accent-color);"></i>
+                    <span>Dil</span>
+                </div>
+                <span style="color: var(--text-muted); font-size: 0.9rem;">Türkçe</span>
+            </div>
+
+            <div class="setting-item"
+                style="display: flex; justify-content: space-between; align-items: center; padding: 1rem; background: rgba(255,255,255,0.02); border-radius: 12px; border: 1px solid var(--border-color);">
+                <div style="display: flex; align-items: center; gap: 1rem;">
+                    <i class="fa-solid fa-moon" style="color: var(--secondary-color);"></i>
+                    <span>Tema</span>
+                </div>
+                <span style="color: var(--text-muted); font-size: 0.9rem;">Koyu</span>
+            </div>
+
+            <div class="setting-item"
+                style="display: flex; justify-content: space-between; align-items: center; padding: 1rem; background: rgba(255,255,255,0.02); border-radius: 12px; border: 1px solid var(--border-color);">
+                <div style="display: flex; align-items: center; gap: 1rem;">
+                    <i class="fa-solid fa-shield-halved" style="color: var(--primary-color);"></i>
+                    <span>Güvenlik</span>
+                </div>
+                <i class="fa-solid fa-chevron-right" style="font-size: 0.8rem; opacity: 0.5;"></i>
+            </div>
+        </div>
+
+        <div style="margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid var(--border-color);">
+            <button class="btn-secondary" style="width: 100%; padding: 1rem; border-color: #ef4444; color: #ef4444;">
+                <i class="fa-solid fa-right-from-bracket"></i> Çıkış Yap
+            </button>
+        </div>
+    </div> <!-- End modal-body -->
+</div> <!-- End modal-content -->
+</div> <!-- End note-modal overlay -->
+</div>
+
+<script type="module" src="script.js?v=24"></script>
 </body>
 
 </html>
