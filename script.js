@@ -731,7 +731,7 @@ document.addEventListener('DOMContentLoaded', () => {
         document.querySelector('.sidebar').classList.add('active');
     }
 
-    alert("Not Defterim v21 - Sıralama Menüsü Gizlendi! 🕵️");
+    alert("Not Defterim v22 - Ekran Genişliği Sabitlendi! 📏");
 });
 
 // --- Data Listeners ---

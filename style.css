@@ -919,12 +919,38 @@ textarea {
         display: block !important;
     }
 
+    /* Fix Horizontal Scroll Issue */
+    html,
+    body {
+        overflow-x: hidden;
+        width: 100%;
+        position: relative;
+    }
+
     .app-container {
         padding-left: 0;
+        width: 100%;
+        overflow-x: hidden;
     }
 
     body {
         overflow: auto;
+    }
+
+    .main-content {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        max-width: 100vw;
+        padding: 0;
+    }
+
+    /* Adjust filter bar padding for mobile to prevent overflow */
+    .filter-bar {
+        padding: 1rem !important;
+        width: 100%;
+        box-sizing: border-box;
     }
 
     .sidebar {
