@@ -726,43 +726,84 @@ document.addEventListener('DOMContentLoaded', () => {
     };
     document.body.appendChild(debugBtn);
 
-    // Mobile: Open sidebar by default if requested
-    if (window.innerWidth <= 768) {
-        document.querySelector('.sidebar').classList.add('active');
-    }
-
-    alert("Not Defterim v22 - Ekran Genişliği Sabitlendi! 📏");
-});
-
-// --- Data Listeners ---
-// --- Duplicate Data Listener Removed ---
-
-onSnapshot(doc(db, "metadata", "groups"), (doc) => {
-    if (doc.exists()) {
-        educationGroups = doc.data().list || [];
-    } else {
-        educationGroups = [];
-    }
-    if (currentCategory === 'egitim') updateSidebarSubMenu();
-});
-
-// Modal Category Listener
-const modCatSelect = document.getElementById('note-category');
-if (modCatSelect) {
-    modCatSelect.addEventListener('change', (e) => {
-        const subInput = document.getElementById('note-subcategory-input');
-        if (e.target.value === 'egitim') {
-            subInput.style.display = 'block';
-            const dataList = document.getElementById('group-suggestions');
-            if (dataList) {
-                const allGroups = new Set(educationGroups);
-                notes.forEach(n => {
-                    if (n.category === 'egitim' && n.subCategory) allGroups.add(n.subCategory);
-                });
-                dataList.innerHTML = Array.from(allGroups).map(g => `<option value="${g}">`).join('');
-            }
-        } else {
-            subInput.style.display = 'none';
+    // --- Mobile Navigation Logic ---
+    window.showMobileContent = function () {
+        if (window.innerWidth <= 768) {
+            document.body.classList.add('mobile-view-active');
         }
+    };
+
+    window.showMobileMenu = function () {
+        document.body.classList.remove('mobile-view-active');
+    };
+
+    // Update Listeners to Trigger View Change
+    const originalFilterCat = window.filterByCategory;
+    window.filterByCategory = function (cat, e) {
+        originalFilterCat(cat, e);
+        window.showMobileContent();
+    };
+
+    const originalFilterFav = window.filterByFavorites;
+    window.filterByFavorites = function () {
+        originalFilterFav();
+        window.showMobileContent();
+    };
+
+    const originalSetQuick = window.setQuickFilter;
+    window.setQuickFilter = function (type, btn) {
+        originalSetQuick(type, btn);
+        // Don't necessarily switch view for quick filters inside the content view?
+        // Actually, user might be in content view using filter bar. 
+        // If we force showMobileContent, it's fine (idempotent).
+    };
+
+    // New Note opening
+    const originalOpenModal = window.openModal;
+    window.openModal = function (editMode) {
+        originalOpenModal(editMode);
+        // No need to switch background view, modal covers all.
+    };
+
+    // --- Init ---
+    document.addEventListener('DOMContentLoaded', () => {
+        // Force Menu Mode on Load for Mobile
+        if (window.innerWidth <= 768) {
+            document.body.classList.remove('mobile-view-active'); // Ensure menu is shown
+        }
+
+        alert("Not Defterim v23 - Mobil Ana Ekran Tasarımı! 📱");
     });
-}
+
+    // --- Data Listeners ---
+    // --- Duplicate Data Listener Removed ---
+
+    onSnapshot(doc(db, "metadata", "groups"), (doc) => {
+        if (doc.exists()) {
+            educationGroups = doc.data().list || [];
+        } else {
+            educationGroups = [];
+        }
+        if (currentCategory === 'egitim') updateSidebarSubMenu();
+    });
+
+    // Modal Category Listener
+    const modCatSelect = document.getElementById('note-category');
+    if (modCatSelect) {
+        modCatSelect.addEventListener('change', (e) => {
+            const subInput = document.getElementById('note-subcategory-input');
+            if (e.target.value === 'egitim') {
+                subInput.style.display = 'block';
+                const dataList = document.getElementById('group-suggestions');
+                if (dataList) {
+                    const allGroups = new Set(educationGroups);
+                    notes.forEach(n => {
+                        if (n.category === 'egitim' && n.subCategory) allGroups.add(n.subCategory);
+                    });
+                    dataList.innerHTML = Array.from(allGroups).map(g => `<option value="${g}">`).join('');
+                }
+            } else {
+                subInput.style.display = 'none';
+            }
+        });
+    }

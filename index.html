@@ -9,7 +9,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="style.css?v=22">
+    <link rel="stylesheet" href="style.css?v=23">
 </head>
 
 <body>
@@ -127,10 +127,14 @@
             </div>
         </aside>
 
-        <!-- Main Content -->
+        <!-- Main Content (Hidden on Mobile Initially) -->
         <main class="main-content">
             <header class="top-bar">
                 <div class="header-left">
+                    <button id="mobile-back-btn" class="icon-btn-outline" style="display: none; margin-right: 0.5rem;"
+                        onclick="window.showMobileMenu()">
+                        <i class="fa-solid fa-arrow-left"></i>
+                    </button>
                     <div class="breadcrumbs">Notlar / Çalışmalarım</div>
                     <h1 class="header-title">Çalışmalarım <i class="fa-solid fa-chevron-down"
                             style="font-size: 1rem; margin-left: 0.5rem; opacity: 0.5;"></i></h1>
@@ -420,7 +424,7 @@
     </div> <!-- End note-modal overlay -->
     </div>
 
-    <script type="module" src="script.js?v=22"></script>
+    <script type="module" src="script.js?v=23"></script>
 </body>
 
 </html>
