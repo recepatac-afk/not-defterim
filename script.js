@@ -807,3 +807,4 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
+});

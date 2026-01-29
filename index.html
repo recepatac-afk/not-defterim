@@ -67,35 +67,35 @@
                 style="font-size: 0.7rem; text-transform: uppercase; color: var(--text-muted); letter-spacing: 0.05em; margin-top: 0.5rem;">
                 Kategoriler</div>
             <div class="category-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem;">
-                <div class="cat-item" data-category="genel">
+                <div class="cat-item" data-category="genel" onclick="window.filterByCategory('genel', event)">
                     <i class="fa-solid fa-note-sticky" style="color: #64748b;"></i>
                     <span>Genel</span>
                 </div>
-                <div class="cat-item" data-category="is">
+                <div class="cat-item" data-category="is" onclick="window.filterByCategory('is', event)">
                     <i class="fa-solid fa-briefcase" style="color: #a855f7;"></i>
                     <span>İş</span>
                 </div>
-                <div class="cat-item" data-category="gorev">
+                <div class="cat-item" data-category="gorev" onclick="window.filterByCategory('gorev', event)">
                     <i class="fa-solid fa-check-double" style="color: #10b981;"></i>
                     <span>Görev</span>
                 </div>
-                <div class="cat-item" data-category="fikir">
+                <div class="cat-item" data-category="fikir" onclick="window.filterByCategory('fikir', event)">
                     <i class="fa-solid fa-lightbulb" style="color: #f59e0b;"></i>
                     <span>Fikir</span>
                 </div>
-                <div class="cat-item" data-category="toplanti">
+                <div class="cat-item" data-category="toplanti" onclick="window.filterByCategory('toplanti', event)">
                     <i class="fa-solid fa-users" style="color: #3b82f6;"></i>
                     <span>Toplantı</span>
                 </div>
-                <div class="cat-item" data-category="karar">
+                <div class="cat-item" data-category="karar" onclick="window.filterByCategory('karar', event)">
                     <i class="fa-solid fa-bullseye" style="color: #ef4444;"></i>
                     <span>Karar</span>
                 </div>
-                <div class="cat-item" data-category="egitim">
+                <div class="cat-item" data-category="egitim" onclick="window.filterByCategory('egitim', event)">
                     <i class="fa-solid fa-graduation-cap" style="color: #4f46e5;"></i>
                     <span>Eğitim</span>
                 </div>
-                <div class="cat-item" data-category="finans">
+                <div class="cat-item" data-category="finans" onclick="window.filterByCategory('finans', event)">
                     <i class="fa-solid fa-coins" style="color: #059669;"></i>
                     <span>Finans</span>
                 </div>
@@ -424,7 +424,7 @@
     </div> <!-- End note-modal overlay -->
     </div>
 
-    <script type="module" src="script.js?v=23"></script>
+    <script type="module" src="script.js?v=24"></script>
 </body>
 
 </html>
