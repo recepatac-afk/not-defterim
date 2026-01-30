@@ -1045,7 +1045,7 @@ document.addEventListener('DOMContentLoaded', () => {
             document.body.classList.remove('mobile-view-active'); // Ensure menu is shown
         }
 
-        alert("Not Defterim (Kızım) v27 - Şekiller Tamam! 🎀");
+        alert("Not Defterim (Kızım) v28 - Şekiller DÜZELDİ! ✅🎨");
     });
 
     // --- Data Listeners ---
