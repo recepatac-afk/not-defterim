@@ -169,13 +169,17 @@ window.insertShape = function (type) {
         div.style.display = 'flex';
         div.style.justifyContent = 'center';
         div.style.alignItems = 'center';
-        div.innerHTML = '<i class="fa-solid fa-star" style="font-size: 3rem; color: #f59e0b;"></i>';
+        div.style.pointerEvents = 'auto';
+        div.style.backgroundColor = 'rgba(245, 158, 11, 0.1)';
+        div.innerHTML = '<i class="fa-regular fa-star" style="font-size: 3rem; color: #f59e0b;"></i>';
     } else if (type === 'heart') {
         div.style.border = 'none';
         div.style.display = 'flex';
         div.style.justifyContent = 'center';
         div.style.alignItems = 'center';
-        div.innerHTML = '<i class="fa-solid fa-heart" style="font-size: 3rem; color: #ec4899;"></i>';
+        div.style.pointerEvents = 'auto';
+        div.style.backgroundColor = 'rgba(236, 72, 153, 0.1)';
+        div.innerHTML = '<i class="fa-regular fa-heart" style="font-size: 3rem; color: #ec4899;"></i>';
     }
 
     // Add Text Area (Hidden by default or empty)
