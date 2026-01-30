@@ -243,7 +243,7 @@ window.insertShape = function (type) {
     // Hide menu
     document.getElementById('shape-menu').style.display = 'none';
 }
-};
+
 
 function attachShapeEvents(el) {
     el.addEventListener('mousedown', shapeMouseDown);
