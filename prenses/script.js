@@ -137,98 +137,108 @@ window.insertShape = function (type) {
     let content = '';
 
     // Logic for specific shapes
-    if (type === 'square' || type === 'rectangle') {
+    // Logic for specific shapes (EXCLUSIVE CHAIN)
+    if (type === 'square') {
         div.style.border = `3px solid ${color}`;
-        if (type === 'rectangle') div.style.width = '160px';
-    }
-    else if (type === 'circle' || type === 'ellipse') {
+        div.style.borderRadius = '0';
+    } else if (type === 'rectangle' || type === 'rect') {
+        div.style.border = `3px solid ${color}`;
+        div.style.width = '160px'; // Wider for rect
+        div.style.borderRadius = '0';
+    } else if (type === 'circle') {
         div.style.border = `3px solid ${color}`;
         div.style.borderRadius = '50%';
-        if (type === 'ellipse') div.style.width = '160px';
-    }
-    else {
-        // SVG Shapes for Arrow, Star, Heart
+    } else if (type === 'ellipse') {
+        div.style.border = `3px solid ${color}`;
+        div.style.borderRadius = '50%';
+        div.style.width = '160px';
+    } else if (type.startsWith('arrow')) {
+        // ARROW LOGIC
+        let rotation = 0;
+        if (type.includes('down')) rotation = 90;
+        if (type.includes('left')) rotation = 180;
+        if (type.includes('up')) rotation = 270;
+
+        div.style.border = 'none';
         div.style.display = 'flex';
-        div.style.alignItems = 'center';
         div.style.justifyContent = 'center';
-
-        if (type.startsWith('arrow')) {
-            let rotation = 0;
-            if (type.includes('down')) rotation = 90;
-        } else if (type === 'rect') {
-            div.style.width = '150px';
-            div.style.height = '80px';
-            div.style.border = '3px solid #10b981';
-        } else if (type === 'arrow') {
-            // FontAwesome Icon
-            div.innerHTML = '<i class="fa-solid fa-arrow-right" style="font-size: 3rem; color: #3b82f6;"></i>';
-            div.style.border = 'none'; // Icons don't need border box usually
-        } else if (type === 'star') {
-            div.innerHTML = '<i class="fa-solid fa-star" style="font-size: 3rem; color: #f59e0b;"></i>';
-            div.style.border = 'none';
-        }
-
-        // Add Text Area (Hidden by default or empty)
-        const textarea = document.createElement('textarea');
-        textarea.className = 'shape-text';
-        textarea.placeholder = ''; // Empty placeholder
-        textarea.style.position = 'absolute';
-        textarea.style.width = '80%';
-        textarea.style.height = '60%';
-        textarea.style.background = 'transparent';
-        textarea.style.border = 'none';
-        textarea.style.resize = 'none';
-        textarea.style.color = 'inherit';
-        textarea.style.pointerEvents = 'none'; // Allow dragging via shape
-        div.appendChild(textarea);
-
-        // Edit Mode on Double Click
-        div.addEventListener('dblclick', () => {
-            div.classList.add('editing');
-            textarea.style.pointerEvents = 'auto';
-            textarea.focus();
-        });
-
-        textarea.addEventListener('blur', () => {
-            div.classList.remove('editing');
-            textarea.style.pointerEvents = 'none';
-        });
-
-        // Resize Handles (with inline styles)
-        const handles = ['nw', 'ne', 'sw', 'se'];
-        handles.forEach(h => {
-            const span = document.createElement('span');
-            span.className = `resize-handle handle-${h}`;
-            span.setAttribute('data-handle', h);
-
-            // Inline Handle Styles
-            span.style.position = 'absolute';
-            span.style.width = '20px';
-            span.style.height = '20px';
-            span.style.background = '#3b82f6';
-            span.style.border = '2px solid white';
-            span.style.borderRadius = '50%';
-            span.style.zIndex = '1001';
-
-            if (h === 'nw') { span.style.top = '-10px'; span.style.left = '-10px'; span.style.cursor = 'nw-resize'; }
-            if (h === 'ne') { span.style.top = '-10px'; span.style.right = '-10px'; span.style.cursor = 'ne-resize'; }
-            if (h === 'sw') { span.style.bottom = '-10px'; span.style.left = '-10px'; span.style.cursor = 'sw-resize'; }
-            if (h === 'se') { span.style.bottom = '-10px'; span.style.right = '-10px'; span.style.cursor = 'se-resize'; }
-
-            div.appendChild(span);
-        });
-
-        wrapper.appendChild(div);
-
-        // Select it immediately
-        selectShape(div);
-
-        // Attach Events (Mouse & Touch)
-        attachShapeEvents(div);
-
-        // Hide menu
-        document.getElementById('shape-menu').style.display = 'none';
+        div.style.alignItems = 'center';
+        div.innerHTML = `<i class="fa-solid fa-arrow-right" style="font-size: 3rem; color: ${color}; transform: rotate(${rotation}deg);"></i>`;
+    } else if (type === 'star') {
+        div.style.border = 'none';
+        div.style.display = 'flex';
+        div.style.justifyContent = 'center';
+        div.style.alignItems = 'center';
+        div.innerHTML = '<i class="fa-solid fa-star" style="font-size: 3rem; color: #f59e0b;"></i>';
+    } else if (type === 'heart') {
+        div.style.border = 'none';
+        div.style.display = 'flex';
+        div.style.justifyContent = 'center';
+        div.style.alignItems = 'center';
+        div.innerHTML = '<i class="fa-solid fa-heart" style="font-size: 3rem; color: #ec4899;"></i>';
     }
+
+    // Add Text Area (Hidden by default or empty)
+    const textarea = document.createElement('textarea');
+    textarea.className = 'shape-text';
+    textarea.placeholder = ''; // Empty placeholder
+    textarea.style.position = 'absolute';
+    textarea.style.width = '80%';
+    textarea.style.height = '60%';
+    textarea.style.background = 'transparent';
+    textarea.style.border = 'none';
+    textarea.style.resize = 'none';
+    textarea.style.color = 'inherit';
+    textarea.style.pointerEvents = 'none'; // Allow dragging via shape
+    div.appendChild(textarea);
+
+    // Edit Mode on Double Click
+    div.addEventListener('dblclick', () => {
+        div.classList.add('editing');
+        textarea.style.pointerEvents = 'auto';
+        textarea.focus();
+    });
+
+    textarea.addEventListener('blur', () => {
+        div.classList.remove('editing');
+        textarea.style.pointerEvents = 'none';
+    });
+
+    // Resize Handles (with inline styles)
+    const handles = ['nw', 'ne', 'sw', 'se'];
+    handles.forEach(h => {
+        const span = document.createElement('span');
+        span.className = `resize-handle handle-${h}`;
+        span.setAttribute('data-handle', h);
+
+        // Inline Handle Styles
+        span.style.position = 'absolute';
+        span.style.width = '20px';
+        span.style.height = '20px';
+        span.style.background = '#3b82f6';
+        span.style.border = '2px solid white';
+        span.style.borderRadius = '50%';
+        span.style.zIndex = '1001';
+
+        if (h === 'nw') { span.style.top = '-10px'; span.style.left = '-10px'; span.style.cursor = 'nw-resize'; }
+        if (h === 'ne') { span.style.top = '-10px'; span.style.right = '-10px'; span.style.cursor = 'ne-resize'; }
+        if (h === 'sw') { span.style.bottom = '-10px'; span.style.left = '-10px'; span.style.cursor = 'sw-resize'; }
+        if (h === 'se') { span.style.bottom = '-10px'; span.style.right = '-10px'; span.style.cursor = 'se-resize'; }
+
+        div.appendChild(span);
+    });
+
+    wrapper.appendChild(div);
+
+    // Select it immediately
+    selectShape(div);
+
+    // Attach Events (Mouse & Touch)
+    attachShapeEvents(div);
+
+    // Hide menu
+    document.getElementById('shape-menu').style.display = 'none';
+}
 };
 
 function attachShapeEvents(el) {
