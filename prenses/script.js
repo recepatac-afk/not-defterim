@@ -799,6 +799,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Color Palette Listener
+    // Color Palette Listener
     const paletteColors = document.querySelectorAll('.palette-color');
     paletteColors.forEach(color => {
         color.addEventListener('click', () => {
@@ -809,13 +810,27 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const selectedColor = color.getAttribute('data-color');
 
-            // Apply to text editor background (wrapper)
-            const textEditor = document.getElementById('note-content-wrapper');
-            if (textEditor) {
-                textEditor.style.backgroundColor = selectedColor;
-                // Adjust text color for contrast
-                const isDark = (selectedColor === '#000000' || selectedColor === '#181b24');
-                document.getElementById('note-content').style.color = isDark ? '#f8fafc' : '#1e293b';
+            if (selectedShape) {
+                // Apply to Shape
+                // If shape has border (Square, Rectangle, Circle, Ellipse)
+                if (selectedShape.style.border) {
+                    selectedShape.style.borderColor = selectedColor;
+                }
+
+                // If shape has Icon (Arrow, Star, Heart)
+                const icon = selectedShape.querySelector('i');
+                if (icon) {
+                    icon.style.color = selectedColor;
+                }
+            } else {
+                // Apply to Background
+                const textEditor = document.getElementById('note-content-wrapper');
+                if (textEditor) {
+                    textEditor.style.backgroundColor = selectedColor;
+                    // Adjust text color for contrast
+                    const isDark = (selectedColor === '#000000' || selectedColor === '#181b24');
+                    document.getElementById('note-content').style.color = isDark ? '#f8fafc' : '#1e293b';
+                }
             }
         });
     });

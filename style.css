@@ -1027,8 +1027,95 @@ textarea {
 
     .modal-content {
         width: 100% !important;
-        height: 100% !important;
-        border-radius: 0;
-        max-width: none;
-    }
-}
+
+        /* --- Draggable Shapes (Robust) --- */
+        .draggable-shape {
+            position: absolute;
+            cursor: grab;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-sizing: border-box;
+            z-index: 50;
+            /* High Z-index */
+            pointer-events: auto !important;
+            /* Force events */
+            min-width: 40px;
+            min-height: 40px;
+            touch-action: none;
+            /* Prevent scroll on mobile */
+        }
+
+        .draggable-shape:active {
+            cursor: grabbing;
+        }
+
+        .draggable-shape.selected {
+            outline: 2px dashed rgba(59, 130, 246, 0.5);
+            /* Blue dashed selection */
+            outline-offset: 4px;
+            z-index: 100;
+            /* Bring to very front */
+        }
+
+        .resize-handle {
+            position: absolute;
+            width: 24px;
+            /* Big touch target */
+            height: 24px;
+            background: var(--primary-color);
+            border: 3px solid white;
+            border-radius: 50%;
+            display: none;
+            z-index: 101;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+        }
+
+        .draggable-shape.selected .resize-handle {
+            display: block;
+        }
+
+        .handle-nw {
+            top: -12px;
+            left: -12px;
+            cursor: nw-resize;
+        }
+
+        .handle-ne {
+            top: -12px;
+            right: -12px;
+            cursor: ne-resize;
+        }
+
+        .handle-sw {
+            bottom: -12px;
+            left: -12px;
+            cursor: sw-resize;
+        }
+
+        .handle-se {
+            bottom: -12px;
+            right: -12px;
+            cursor: se-resize;
+        }
+
+        .shape-text {
+            background: transparent;
+            border: none;
+            outline: none;
+            text-align: center;
+            width: 80%;
+            height: 60%;
+            resize: none;
+            overflow: hidden;
+            color: inherit;
+            font-family: inherit;
+            pointer-events: none;
+            /* Let clicks pass to shape unless dblclick */
+        }
+
+        .draggable-shape.editing .shape-text {
+            pointer-events: auto;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 4px;
+        }
