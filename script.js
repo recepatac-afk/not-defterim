@@ -1050,7 +1050,7 @@ document.addEventListener('DOMContentLoaded', () => {
             document.body.classList.remove('mobile-view-active'); // Ensure menu is shown
         }
 
-        alert("Not Defterim v27 - Şekiller Tamam! 🟥�⭐");
+        alert("Not Defterim v29 - Şekil Hatası DÜZELDİ! ✅🎨");
     });
 
     // --- Data Listeners ---
